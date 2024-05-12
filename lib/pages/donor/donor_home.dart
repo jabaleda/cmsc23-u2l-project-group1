@@ -2,6 +2,8 @@
   Donor Home Page - displays list of all organizations a donor can donate to
 */
 import 'package:flutter/material.dart';
+import 'package:my_app/pages/donor/donor_donations.dart';
+import 'package:my_app/pages/donor/donor_orglist.dart';
 
 class DonorHome extends StatefulWidget {
   const DonorHome({super.key});
@@ -11,39 +13,43 @@ class DonorHome extends StatefulWidget {
 }
 
 class _DonorHomeState extends State<DonorHome> {
-  // Soon: Obtain organization list by Stream<QuerySnapshot>
-  // Soon: Modify listview.builder wrapped around StreamBuilder
+  // 
+  static List<Widget> _pages = <Widget>[
+    DonorOrgList(),
+    DonorDonations(),
+    Placeholder()
+  ];
 
-  // Possible Sample data using Provider
-  // List<Org> orgs = context.watch<OrgList>().olist;
-  // basic sample data (map)
-  var orgs = {0:"Org 1", 1:"Org 2", 2:"Org 3"};
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Home"),
-      ),
-      body: Column(
-        children: [
-          Flexible(
-            child: ListView.builder(
-              itemCount: orgs.length,
-              // Soon: itemBuilder: ((context, index) {})
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  title: Text(orgs[index]!),
-                  subtitle: Text("More organization info"),
-                  onTap: () {
-                    // Soon: Donate screen
-                  },
-                );
-              }
-            ),
-          )
+      body: _pages[_selectedIndex], 
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_rounded),
+            label: 'Home'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.inbox_rounded),
+            label: 'Donations'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_rounded),
+            label: 'Profile'
+          ),
         ],
-      )
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped
+      ),
     );
   }
 }
