@@ -71,9 +71,9 @@ class _OrgDrawerState extends State<OrgDrawer> {
           DrawerHeader(child: Text("Organization Name")),
           ListTile(
             title: Text("Donation Drives"),
-            onTap: () => {
-              // pop
-              // pushNamed
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, "/organizationDrives");
             },
           ),
         ],
