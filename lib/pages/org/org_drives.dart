@@ -20,7 +20,7 @@ class _OrganizationDrivesState extends State<OrganizationDrives> {
           return ListTile(
             title: Text("Donation Drive"),
             trailing: Icon(Icons.more_horiz),
-          );;
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(

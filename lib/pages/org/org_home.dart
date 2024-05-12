@@ -68,7 +68,11 @@ class _OrgDrawerState extends State<OrgDrawer> {
     return Drawer(
       child: ListView(
         children: [
-          DrawerHeader(child: Text("Organization Name")),
+          UserAccountsDrawerHeader(
+            accountName: Text("Organization Name"),
+            accountEmail: Text("bingbong@org.com"),
+            currentAccountPicture: Icon(Icons.account_circle, size: 72,),
+          ),
           ListTile(
             title: Text("Donation Drives"),
             onTap: () {
