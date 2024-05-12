@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/pages/home_page.dart';
+import 'package:my_app/pages/org/org_donationDetails.dart';
 import 'package:my_app/pages/org/org_drives.dart';
 import 'package:my_app/pages/org/org_home.dart';
 import 'package:my_app/pages/org/org_profile.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         '/organization': (context) => const OrganizationHome(),
         '/organizationProfile': (context) => const OrganizationProfile(),
         '/organizationDrives': (context) => const OrganizationDrives(),
+        '/donationDetail': (context) => const DonationDetail(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,

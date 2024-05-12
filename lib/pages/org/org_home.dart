@@ -14,7 +14,7 @@ class _OrganizationHomeState extends State<OrganizationHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Organization Name"),
+        title: Text("Home"),
         actions: <Widget>[
           IconButton(
             onPressed: () => {
@@ -48,7 +48,15 @@ class _DonationListState extends State<DonationList> {
         return ListTile(
           title: Text("McDonalds"),
           subtitle: Text("Pending"),
-          trailing: Icon(Icons.more_horiz),
+          trailing: IconButton(
+            onPressed: () {
+
+            },
+            icon: Icon(Icons.more_horiz),
+          ),
+          onTap: () {
+            Navigator.pushNamed(context, "/donationDetail");
+          },
         );
       }
     );
@@ -68,7 +76,7 @@ class _OrgDrawerState extends State<OrgDrawer> {
     return Drawer(
       child: ListView(
         children: [
-          UserAccountsDrawerHeader(
+          const UserAccountsDrawerHeader(
             accountName: Text("Organization Name"),
             accountEmail: Text("bingbong@org.com"),
             currentAccountPicture: Icon(Icons.account_circle, size: 72,),

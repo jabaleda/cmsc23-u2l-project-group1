@@ -19,7 +19,12 @@ class _OrganizationDrivesState extends State<OrganizationDrives> {
         itemBuilder: (context, index) {
           return ListTile(
             title: Text("Donation Drive"),
-            trailing: Icon(Icons.more_horiz),
+            trailing: IconButton(
+              onPressed: () {
+                // consider DraggableScrollableSheet 
+              },
+              icon: Icon(Icons.more_horiz),
+            ),
           );
         },
       ),
