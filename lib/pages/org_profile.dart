@@ -12,7 +12,7 @@ class _OrganizationProfileState extends State<OrganizationProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Organization Name"),
+        title: Text("Profile"),
       ),
       body: Placeholder(),
     );

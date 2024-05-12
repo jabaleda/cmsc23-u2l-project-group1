@@ -39,9 +39,19 @@ class DonationList extends StatefulWidget {
 }
 
 class _DonationListState extends State<DonationList> {
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return ListView.builder(
+      itemCount: 1,
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: Text("McDonalds"),
+          subtitle: Text("Pending"),
+          trailing: Icon(Icons.more_horiz),
+        );
+      }
+    );
   }
 }
 
