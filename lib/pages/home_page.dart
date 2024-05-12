@@ -9,6 +9,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'admin/admin_signin.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -89,7 +90,10 @@ class _MyHomePageState extends State<MyHomePage> {
     margin: const EdgeInsets.all(20),
     child: ElevatedButton(
       onPressed: () {
-        // 
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const SignInPage()),
+        );
       }, 
       child: Text("Admin's View")
     ),
