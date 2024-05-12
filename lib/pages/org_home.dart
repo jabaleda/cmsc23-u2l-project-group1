@@ -19,6 +19,7 @@ class _OrganizationHomeState extends State<OrganizationHome> {
           IconButton(
             onPressed: () => {
               // go to profile screen ?
+              Navigator.pushNamed(context, "/organizationProfile")
             }, 
             icon: Icon(Icons.account_circle_sharp),
             )

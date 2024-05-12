@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/pages/home_page.dart';
 import 'package:my_app/pages/org_home.dart';
+import 'package:my_app/pages/org_profile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const MyHomePage(title: "Flutter Demo Home Page"),
         '/organization': (context) => const OrganizationHome(),
+        '/organizationProfile': (context) => const OrganizationProfile(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
