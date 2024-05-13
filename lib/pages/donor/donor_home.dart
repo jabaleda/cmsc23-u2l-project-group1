@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/pages/donor/donor_donations.dart';
 import 'package:my_app/pages/donor/donor_orglist.dart';
+import 'package:my_app/pages/donor/donor_profile.dart';
 
 class DonorHome extends StatefulWidget {
   const DonorHome({super.key});
@@ -17,7 +18,7 @@ class _DonorHomeState extends State<DonorHome> {
   static List<Widget> _pages = <Widget>[
     DonorOrgList(),
     DonorDonations(),
-    Placeholder()
+    DonorProfile(),
   ];
 
   int _selectedIndex = 0;

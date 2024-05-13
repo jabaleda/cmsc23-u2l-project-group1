@@ -21,6 +21,7 @@ class _DonorOrgListState extends State<DonorOrgList> {
     return Scaffold(
       appBar: AppBar(
         title: Text("App Name"),
+        automaticallyImplyLeading: false,
       ),
       body: Column(
         children: [
