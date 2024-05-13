@@ -36,10 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+  
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -47,16 +44,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             toDonor, toOrg, toAdmin
@@ -105,6 +92,14 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   );
 
-
-
 }
+
+
+// E9 Organization: Entry Page
+/*
+In state:
+- widget build: obtain user stream to determine if:
+  - a user is logged in -> go to App Proper
+  - no user is logged in -> redirect to Sign In Page
+
+*/
