@@ -4,6 +4,7 @@ import 'package:my_app/pages/org/org_donationDetails.dart';
 import 'package:my_app/pages/org/org_drives.dart';
 import 'package:my_app/pages/org/org_home.dart';
 import 'package:my_app/pages/org/org_profile.dart';
+import 'package:my_app/pages/signing/signup_donor_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +20,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       initialRoute: '/',
       routes: {
-        '/': (context) => const MyHomePage(title: "Flutter Demo Home Page"),
+        // initial route set to HomePage, which gives SIGN IN page by default
+        '/': (context) => const SignUpDonor(),
+
         '/organization': (context) => const OrganizationHome(),
         '/organizationProfile': (context) => const OrganizationProfile(),
         '/organizationDrives': (context) => const OrganizationDrives(),
