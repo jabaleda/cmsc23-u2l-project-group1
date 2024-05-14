@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:my_app/pages/admin/view_org.dart';
+import 'package:my_app/pages/admin/org_approval.dart';
+import 'view_org.dart';
+import 'view_donor.dart';
 import 'admin_signin.dart';
 
 class AdminPage extends StatefulWidget {
@@ -51,7 +53,7 @@ class _AdminPageState extends State<AdminPage> {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const SignInPage()),
+          MaterialPageRoute(builder: (context) => const OrgApproval()),
         );
       }, 
       child: Text("Approve Organization Sign-Ups")
@@ -64,7 +66,7 @@ class _AdminPageState extends State<AdminPage> {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const SignInPage()),
+          MaterialPageRoute(builder: (context) => const ViewDonors()),
         );
       }, 
       child: Text("View All Donors")

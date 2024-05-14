@@ -2,27 +2,28 @@
 import 'dart:convert';
 
 class Organization {//for organization details
-  final int orgId;
   String? name;
   String? id;
   String? about;
-  bool status;
+  bool statusDonation;
+  bool statusApproved;
 
   Organization({
-    required this.orgId,
     required this.name,
     this.id,
     required this.about,
-    required this.status,
+    required this.statusDonation,
+    required this.statusApproved
+
   });
 
   factory Organization.fromJson(Map<String, dynamic> json) {
     return Organization(
-      orgId: json['userId'],
       name: json['email'],
       id: json['id'],
       about: json['fname'],
-      status: json['lname'],
+      statusDonation: json['statusDonation'],
+      statusApproved: json['statusApproved'],
     );
   }
 
@@ -33,10 +34,10 @@ class Organization {//for organization details
 
   Map<String, dynamic> toJson(Organization org) {
     return {
-      'orgId': org.orgId,
       'name': org.name,
       'about': org.about,
-      'status': org.status,
+      'statusDonation': org.statusDonation,
+      'statusApproved': org.statusApproved
     };
   }
 }
