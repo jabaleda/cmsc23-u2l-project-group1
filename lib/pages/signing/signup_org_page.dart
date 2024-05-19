@@ -10,6 +10,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_app/pages/signing/signup_donor_page.dart';
+import 'package:my_app/pages/signing/signin_page.dart';
 
 class SignUpOrg extends StatefulWidget {
   const SignUpOrg({super.key});
@@ -23,8 +24,13 @@ class _SignUpOrgState extends State<SignUpOrg> {
   // formkey
   final _formKey = GlobalKey<FormState>();
 
-  String? name;
+  String? orgname;
+  String? username;
+  String? email;
   String? password;
+  String? address;
+  String? contactNo;
+  String? proof;
   
   
   @override
@@ -39,11 +45,16 @@ class _SignUpOrgState extends State<SignUpOrg> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 heading,
-                nameField,
+                emailField,
                 passwordField,
+                orgnameField,
+                usernameField,
+                addressField,
+                contactNoField,
+                proofField,
                 submitButton,
                 asDonorButton,
-                
+                asAdminButton
               ],
             )
           ),
@@ -60,12 +71,12 @@ class _SignUpOrgState extends State<SignUpOrg> {
     ),
   );
 
-  Widget get nameField => Padding(
+  Widget get emailField => Padding(
     padding: const EdgeInsets.only(bottom: 30),
     child: TextFormField(
       decoration:
           const InputDecoration(border: OutlineInputBorder(), label: Text("Email"), hintText: "juandelacruz09@gmail.com"),
-      onSaved: (value) => setState(() => name = value),
+      onSaved: (value) => setState(() => email = value),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return "Please enter your email";
@@ -84,6 +95,80 @@ class _SignUpOrgState extends State<SignUpOrg> {
       validator: (value) {
         if (value == null || value.isEmpty) {
           return "Please enter your password";
+        }
+        return null;
+      },
+    ),
+  );
+  Widget get orgnameField => Padding(
+    padding: const EdgeInsets.only(bottom: 30),
+    child: TextFormField(
+      decoration:
+          const InputDecoration(border: OutlineInputBorder(), label: Text("Organization Name"), hintText: "McDonalds"),
+      onSaved: (value) => setState(() => orgname = value),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Please enter your organization name";
+        }
+        return null;
+      },
+    ),
+  );
+
+  Widget get usernameField => Padding(
+    padding: const EdgeInsets.only(bottom: 30),
+    child: TextFormField(
+      decoration:
+          const InputDecoration(border: OutlineInputBorder(), label: Text("Username"), hintText: "juandelacruz09@gmail.com"),
+      onSaved: (value) => setState(() => username = value),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Please enter your usernamme";
+        }
+        return null;
+      },
+    ),
+  );
+
+  Widget get addressField => Padding(
+    padding: const EdgeInsets.only(bottom: 30),
+    child: TextFormField(
+      decoration:
+          const InputDecoration(border: OutlineInputBorder(), label: Text("Address"), hintText: "#, St., Barangay, City"),
+      onSaved: (value) => setState(() => address = value),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Please enter your address";
+        }
+        return null;
+      },
+    ),
+  );
+
+  Widget get contactNoField => Padding(
+    padding: const EdgeInsets.only(bottom: 30),
+    child: TextFormField(
+      decoration:
+          const InputDecoration(border: OutlineInputBorder(), label: Text("Contact number"), hintText: "09XXXXXXXXX"),
+      onSaved: (value) => setState(() => contactNo = value),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Please enter your contact number";
+        }
+        return null;
+      },
+    ),
+  );
+
+  Widget get proofField => Padding(
+    padding: const EdgeInsets.only(bottom: 30),
+    child: TextFormField(
+      decoration:
+          const InputDecoration(border: OutlineInputBorder(), label: Text("Proof"), hintText: "drive.google.XXXXXXXXX"),
+      onSaved: (value) => setState(() => proof = value),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Please enter your proof";
         }
         return null;
       },
@@ -112,5 +197,14 @@ class _SignUpOrgState extends State<SignUpOrg> {
     },
     child: Text("Sign Up as Donor")
   );
+
+  Widget get asAdminButton => TextButton(
+    onPressed: () {
+      Navigator.pop(context);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => SignInPage()));
+    },
+    child: Text("Already have an account? Sign in instead")
+  );
+
 
 }

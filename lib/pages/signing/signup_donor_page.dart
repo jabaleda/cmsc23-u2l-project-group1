@@ -3,10 +3,10 @@
   - idea: separate related data, make multi page form
 
 */
-
 import 'package:flutter/material.dart';
 import 'package:my_app/pages/home_page.dart';
 import 'package:my_app/pages/signing/signup_org_page.dart';
+import 'package:my_app/pages/signing/signin_page.dart';
 
 class SignUpDonor extends StatefulWidget {
   const SignUpDonor({super.key});
@@ -42,8 +42,13 @@ class _SignUpDonorState extends State<SignUpDonor> {
                 heading,
                 emailField,
                 passwordField,
+                nameField,
+                usernameField,
+                addressField,
+                contactNoField,
                 submitButton,
-                asOrgButton
+                asOrgButton,
+                asAdminButton
                 
               ],
             )
@@ -91,6 +96,65 @@ class _SignUpDonorState extends State<SignUpDonor> {
     ),
   );
 
+  Widget get nameField => Padding(
+    padding: const EdgeInsets.only(bottom: 30),
+    child: TextFormField(
+      decoration:
+          const InputDecoration(border: OutlineInputBorder(), label: Text("Name"), hintText: "Firstname  Middle Initial Lastname"),
+      onSaved: (value) => setState(() => name = value),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Please enter your name";
+        }
+        return null;
+      },
+    ),
+  );
+
+  Widget get usernameField => Padding(
+    padding: const EdgeInsets.only(bottom: 30),
+    child: TextFormField(
+      decoration:
+          const InputDecoration(border: OutlineInputBorder(), label: Text("Username"), hintText: "juandelacruz09@gmail.com"),
+      onSaved: (value) => setState(() => username = value),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Please enter your username";
+        }
+        return null;
+      },
+    ),
+  );
+
+  Widget get addressField => Padding(
+    padding: const EdgeInsets.only(bottom: 30),
+    child: TextFormField(
+      decoration:
+          const InputDecoration(border: OutlineInputBorder(), label: Text("Address"), hintText: "#,St.,Barangay,City"),
+      onSaved: (value) => setState(() => address = value),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Please enter your address";
+        }
+        return null;
+      },
+    ),
+  );
+
+  Widget get contactNoField => Padding(
+    padding: const EdgeInsets.only(bottom: 30),
+    child: TextFormField(
+      decoration:
+          const InputDecoration(border: OutlineInputBorder(), label: Text("Contact Number"), hintText: "09XXXXXXXXX"),
+      onSaved: (value) => setState(() => contactNo = value),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Please enter your contact number";
+        }
+        return null;
+      },
+    ),
+  );
   // other fields
 
 
@@ -111,6 +175,14 @@ class _SignUpDonorState extends State<SignUpDonor> {
       Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpOrg()));
     },
     child: Text("Sign Up as Org")
+  );
+
+  Widget get asAdminButton => TextButton(
+    onPressed: () {
+      Navigator.pop(context);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => SignInPage()));
+    },
+    child: Text("Already have an account? Sign in instead")
   );
 
 

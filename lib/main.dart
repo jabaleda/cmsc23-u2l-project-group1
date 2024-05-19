@@ -4,11 +4,22 @@ import 'package:my_app/pages/org/org_donationDetails.dart';
 import 'package:my_app/pages/org/org_drives.dart';
 import 'package:my_app/pages/org/org_home.dart';
 import 'package:my_app/pages/org/org_profile.dart';
+import 'package:my_app/pages/signing/admin_signin.dart';
 import 'package:my_app/pages/signing/signup_donor_page.dart';
+import 'pages/signing/admin_signin.dart';
+import 'pages/signing/signin_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -21,7 +32,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // initial route set to HomePage, which gives SIGN IN page by default
-        '/': (context) => const SignUpDonor(),
+        '/': (context) => const SignInPage(),
 
         '/organization': (context) => const OrganizationHome(),
         '/organizationProfile': (context) => const OrganizationProfile(),

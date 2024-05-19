@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:my_app/pages/admin/admin_page.dart';
 
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+class AdminSignInPage extends StatefulWidget {
+  const AdminSignInPage({super.key});
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<AdminSignInPage> createState() => _AdminSignInPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _AdminSignInPageState extends State<AdminSignInPage> {
   final _formKey = GlobalKey<FormState>();
   String? user;
   String? password;

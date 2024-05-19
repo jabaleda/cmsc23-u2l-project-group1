@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_app/pages/admin/org_approval.dart';
 import 'view_org.dart';
 import 'view_donor.dart';
-import 'admin_signin.dart';
+import '../signing/admin_signin.dart';
 
 class AdminPage extends StatefulWidget {
   const AdminPage({super.key});
