@@ -11,9 +11,6 @@ class _OrganizationProfileState extends State<OrganizationProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Profile"),
-      ),
       body: Column(
         children: [
           Text("Organization Name"),
