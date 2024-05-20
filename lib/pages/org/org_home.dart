@@ -27,6 +27,7 @@ class _OrganizationHomeState extends State<OrganizationHome> {
       ),
       drawer: const OrgDrawer(),
       body: const DonationList(),
+      bottomNavigationBar: const OrgBotNav(),
     );
   }
 }
@@ -59,6 +60,27 @@ class _DonationListState extends State<DonationList> {
           },
         );
       }
+    );
+  }
+}
+
+class OrgBotNav extends StatefulWidget {
+  const OrgBotNav({super.key});
+
+  @override
+  State<OrgBotNav> createState() => _OrgBotNavState();
+}
+
+class _OrgBotNavState extends State<OrgBotNav> {
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home_rounded),
+          label: "Home"
+        ),
+      ],
     );
   }
 }
