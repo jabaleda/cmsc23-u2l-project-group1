@@ -94,15 +94,10 @@ class _SignInPageState extends State<SignInPage> {
       onPressed: () async {
         if (_formKey.currentState!.validate()) {
           _formKey.currentState!.save();
-          String? message = await context.read<AuthProvider>().authService.signIn(user!, password!, context);
+          String? message = await context.read<UserAuthProvider>().authService.signIn(user!, password!, context);
 
           print(message);
           print(showSignInErrorMessage);
-
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const MyHomePage(title: "Homepage")),
-          );
 
           setState(() {
             if (message != null && message.isNotEmpty) {
@@ -125,7 +120,6 @@ class _SignInPageState extends State<SignInPage> {
 
   Widget get asDonorButton => TextButton(
     onPressed: () {
-      Navigator.pop(context);
       Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpDonor()));
     },
     child: Text("Dont have an account? Sign up")
