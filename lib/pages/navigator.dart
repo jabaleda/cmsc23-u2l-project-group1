@@ -3,6 +3,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app/pages/admin/admin_page.dart';
 import 'package:provider/provider.dart';
 import 'home_page.dart';
 import '../providers/auth_provider.dart';
@@ -39,6 +40,11 @@ class _HomePageState extends State<HomePage> {
             return const SignInPage();//if no user
           }
 
+          if(snapshot.data?.email! == "aa@gmail.com")
+          {
+            
+            return const AdminPage();
+          }
           // if user is logged in
           print(snapshot.data);
           return const MyHomePage(title:"MyHomePage");
