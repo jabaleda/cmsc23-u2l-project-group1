@@ -25,7 +25,6 @@ class _OrganizationHomeState extends State<OrganizationHome> {
             )
         ],
       ),
-      drawer: const OrgDrawer(),
       body: const DonationList(),
       bottomNavigationBar: const OrgBotNav(),
     );
@@ -81,37 +80,6 @@ class _OrgBotNavState extends State<OrgBotNav> {
           label: "Home"
         ),
       ],
-    );
-  }
-}
-
-class OrgDrawer extends StatefulWidget {
-  const OrgDrawer({super.key});
-
-  @override
-  State<OrgDrawer> createState() => _OrgDrawerState();
-}
-
-class _OrgDrawerState extends State<OrgDrawer> {
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        children: [
-          const UserAccountsDrawerHeader(
-            accountName: Text("Organization Name"),
-            accountEmail: Text("bingbong@org.com"),
-            currentAccountPicture: Icon(Icons.account_circle, size: 72,),
-          ),
-          ListTile(
-            title: Text("Donation Drives"),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.pushNamed(context, "/organizationDrives");
-            },
-          ),
-        ],
-      ),
     );
   }
 }
