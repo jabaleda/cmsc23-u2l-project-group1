@@ -63,23 +63,30 @@ class _DonationListState extends State<DonationList> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 1,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text("McDonalds"),
-          subtitle: Text("Pending"),
-          trailing: IconButton(
-            onPressed: () {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Home"),
+        automaticallyImplyLeading: false,
+      ),
+      body: 
+        ListView.builder(
+          itemCount: 1,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text("McDonalds"),
+              subtitle: Text("Pending"),
+              trailing: IconButton(
+                onPressed: () {
 
-            },
-            icon: Icon(Icons.more_horiz),
-          ),
-          onTap: () {
-            Navigator.pushNamed(context, "/donationDetail");
-          },
-        );
-      }
+                },
+                icon: Icon(Icons.more_horiz),
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, "/donationDetail");
+              },
+            );
+          }
+        ),
     );
   }
 }
