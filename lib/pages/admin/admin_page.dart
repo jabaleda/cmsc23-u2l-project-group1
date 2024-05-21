@@ -4,6 +4,8 @@ import 'package:my_app/pages/admin/org_approval.dart';
 import 'view_org.dart';
 import 'view_donor.dart';
 import '../signing/admin_signin.dart';
+import '../../providers/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class AdminPage extends StatefulWidget {
   const AdminPage({super.key});
@@ -18,6 +20,7 @@ class _AdminPageState extends State<AdminPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      drawer: drawer,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("Admin Page"),
@@ -73,6 +76,16 @@ class _AdminPageState extends State<AdminPage> {
     ),
   );
 
-
+  Drawer get drawer => Drawer(
+          child: ListView(padding: EdgeInsets.zero, children: [
+        const DrawerHeader(padding: EdgeInsets.fromLTRB(16, 16, 16, 5),child: Center(child: Text("What do you want to do?"))),
+        ListTile(
+          title: const Text('Logout'),
+          onTap: () {
+            context.read<UserAuthProvider>().signOut();
+            Navigator.pop(context);
+          },
+        ),
+      ]));
 
 }
