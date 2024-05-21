@@ -189,7 +189,7 @@ class _SignUpDonorState extends State<SignUpDonor> {
   Widget get asAdminButton => TextButton(
     onPressed: () {
       Navigator.pop(context);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => SignInPage()));
+      // Navigator.push(context, MaterialPageRoute(builder: (context) => SignInPage()));
     },
     child: Text("Already have an account? Sign in instead")
   );
