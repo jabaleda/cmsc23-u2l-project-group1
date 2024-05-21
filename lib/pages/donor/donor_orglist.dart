@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/pages/donor/donor_donate.dart';
 
 class DonorOrgList extends StatefulWidget {
   const DonorOrgList({super.key});
@@ -34,8 +35,12 @@ class _DonorOrgListState extends State<DonorOrgList> {
                   title: Text(orgs[index]!),
                   subtitle: Text("More organization info"),
                   onTap: () {
-                    // Soon: Donate screen
-                    // DonorDonate()
+                    // Donate screen
+                    // Pass org name as args
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DonorDonate()),
+                    );
                   },
                 );
               }
