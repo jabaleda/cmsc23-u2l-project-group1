@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/pages/donor/donation_detail.dart';
+
 
 class DonorDonations extends StatefulWidget {
   const DonorDonations({super.key});
@@ -34,8 +36,12 @@ class _DonorDonationsState extends State<DonorDonations> {
                   title: Text(orgs[index]!),
                   subtitle: Text("More donation info"),
                   onTap: () {
-                    // Soon: Donate screen
-                    // DonorDonate()
+                    // Donation detail screen
+                    // pass the donation id as args to retrieve info
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DDonationDetail()),
+                    );
                   },
                 );
               }

@@ -11,3 +11,43 @@
     - generate QR (for drop-off only)
     
 */
+
+import 'package:flutter/material.dart';
+
+class DonorDonate extends StatefulWidget {
+  const DonorDonate({super.key});
+
+  @override
+  State<DonorDonate> createState() => _DonorDonateState();
+}
+
+class _DonorDonateState extends State<DonorDonate> {
+  final _formKey = GlobalKey<FormState>();
+  // fields
+
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Donation Form")
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 100, horizontal: 30),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Placeholder()
+              ],
+            ),
+          ),
+        )
+      )
+    );
+  }
+}
