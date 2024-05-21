@@ -1,6 +1,8 @@
 // Organization Home Page
 // Display list of donations
 import 'package:flutter/material.dart';
+import 'package:my_app/pages/org/org_drives.dart';
+import 'package:my_app/pages/org/org_profile.dart';
 
 class OrganizationHome extends StatefulWidget {
   const OrganizationHome({super.key});
@@ -10,23 +12,42 @@ class OrganizationHome extends StatefulWidget {
 }
 
 class _OrganizationHomeState extends State<OrganizationHome> {
+  static List<Widget> pages = <Widget>[
+    DonationList(),
+    OrganizationDrives(),
+    OrganizationProfile(),
+  ];
+
+  int currIndex = 0;
+
+  void onItemTapped(int index) {
+    setState(() {
+      currIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Home"),
-        actions: <Widget>[
-          IconButton(
-            onPressed: () => {
-              // go to profile screen ?
-              Navigator.pushNamed(context, "/organizationProfile")
-            }, 
-            icon: Icon(Icons.account_circle_sharp),
-            )
-        ],
+      body: pages[currIndex],
+      bottomNavigationBar: BottomNavigationBar(
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home_rounded),
+          label: "Home"
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.inbox_rounded),
+          label: "Drives"
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person_rounded),
+          label: "Profile"
+        ),
+      ],
+      currentIndex: currIndex,
+      onTap: onItemTapped
       ),
-      drawer: const OrgDrawer(),
-      body: const DonationList(),
     );
   }
 }
@@ -59,37 +80,6 @@ class _DonationListState extends State<DonationList> {
           },
         );
       }
-    );
-  }
-}
-
-class OrgDrawer extends StatefulWidget {
-  const OrgDrawer({super.key});
-
-  @override
-  State<OrgDrawer> createState() => _OrgDrawerState();
-}
-
-class _OrgDrawerState extends State<OrgDrawer> {
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        children: [
-          const UserAccountsDrawerHeader(
-            accountName: Text("Organization Name"),
-            accountEmail: Text("bingbong@org.com"),
-            currentAccountPicture: Icon(Icons.account_circle, size: 72,),
-          ),
-          ListTile(
-            title: Text("Donation Drives"),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.pushNamed(context, "/organizationDrives");
-            },
-          ),
-        ],
-      ),
     );
   }
 }
