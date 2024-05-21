@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/pages/home_page.dart';
 import 'package:my_app/pages/org/org_createDrive.dart';
+import 'package:my_app/pages/navigator.dart';
 import 'package:my_app/pages/org/org_donationDetails.dart';
 import 'package:my_app/pages/org/org_drives.dart';
 import 'package:my_app/pages/org/org_home.dart';
 import 'package:my_app/pages/org/org_profile.dart';
 import 'package:my_app/pages/signing/admin_signin.dart';
 import 'package:my_app/pages/signing/signup_donor_page.dart';
+import 'package:my_app/providers/auth_provider.dart';
 import 'pages/signing/admin_signin.dart';
 import 'pages/signing/signin_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: ((context) => UserAuthProvider()))
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 
@@ -33,7 +44,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // initial route set to HomePage, which gives SIGN IN page by default
-        '/': (context) => const SignInPage(),
+        '/': (context) => const HomePage(),
 
         '/organization': (context) => const OrganizationHome(),
         '/organizationProfile': (context) => const OrganizationProfile(),

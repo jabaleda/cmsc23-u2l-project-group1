@@ -5,7 +5,11 @@ class FirebaseAuthAPI {
 
   static final FirebaseAuth auth = FirebaseAuth.instance;
 
-  Stream<User?> getUser() {
+  User? getUser(){
+    return auth.currentUser;
+  }
+
+  Stream<User?> getSignedIn() {
     return auth.authStateChanges();
   }
 
