@@ -14,6 +14,7 @@ class _DonationDetailState extends State<DonationDetail> {
       appBar: AppBar(
         title: Text("Donation"),
       ),
+      // consider show modal bottom sheet
       body: SingleChildScrollView(
         child: Center(
           child: Column(
