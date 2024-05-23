@@ -8,7 +8,7 @@ class Donation {
   String? id;
   String org;
   String donor;      // identifier. username?
-  String category;
+  // String category;
   bool pickUp;
   double weight;     // type=number in db
   String unit;
@@ -26,7 +26,7 @@ class Donation {
     this.id,
     required this.org,
     required this.donor,
-    required this.category,
+    // required this.category,
     required this.pickUp,
     required this.weight,
     required this.unit,
@@ -42,7 +42,7 @@ class Donation {
       id: json['id'],
       org: json['org'],
       donor: json['donor'],
-      category: json['category'],
+      // category: json['category'],
       pickUp: json['pickUp'],
       weight: json['weight'],
       unit: json['unit'],
@@ -63,7 +63,7 @@ class Donation {
     return {
       'org': donation.org,
       'donor': donation.donor,
-      'category': donation.category,
+      // 'category': donation.category,
       'pickUp': donation.pickUp,
       'weight': donation.weight,
       'unit': donation.unit,
