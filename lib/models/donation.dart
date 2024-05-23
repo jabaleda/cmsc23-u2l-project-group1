@@ -12,7 +12,7 @@ class Donation {
   bool pickUp;
   double weight;     // type=number in db
   String unit;
-  String date;       //
+  // String date;       //
   String status;
 
   // for pick up == true
@@ -30,7 +30,7 @@ class Donation {
     required this.pickUp,
     required this.weight,
     required this.unit,
-    required this.date,
+    // required this.date,
     required this.status,
     this.address,
     this.contactNo
@@ -44,12 +44,12 @@ class Donation {
       donor: json['donor'],
       // category: json['category'],
       pickUp: json['pickUp'],
-      weight: json['weight'],
+      weight: json['weight'].toDouble(),
       unit: json['unit'],
-      date: json['date'],
+      // date: json['date'],
       status: json['status'],
       address: json['address'],
-      contactNo: json['contactNo']
+      contactNo: json['contactno']
       // QR code
     );
   }
@@ -67,7 +67,7 @@ class Donation {
       'pickUp': donation.pickUp,
       'weight': donation.weight,
       'unit': donation.unit,
-      'date': donation.date,
+      // 'date': donation.date,
       'status': donation.status,
       'address': donation.address,
       'contactNo': donation.contactNo

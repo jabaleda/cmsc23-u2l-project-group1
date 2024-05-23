@@ -8,14 +8,14 @@ import 'package:my_app/api/firebase_donation_api.dart';
 
 import '../models/donation.dart';
 
-class DonationList with ChangeNotifier {
+class DonorDonationProvider with ChangeNotifier {
   // donation api
   FirebaseDonationAPI firebaseService = FirebaseDonationAPI();
   // stream
   late Stream<QuerySnapshot> _donationStream;
   
   // ignore: non_constant_identifier_names
-  DonationListProvider() {
+  DonorDonationProvider() {
     fetchDonationList();
   }
 
