@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../api/firebase_auth_api.dart';
+import '../api/firebase_donor_api.dart';
+
 
 class UserAuthProvider with ChangeNotifier {
   late FirebaseAuthAPI authService;
@@ -22,7 +24,7 @@ class UserAuthProvider with ChangeNotifier {
   }
 
   Future<void> signUp(String email, String password) async {
-    await authService.signUp(email, password);
+    await authService.signUp(email, password); 
     notifyListeners();
   }
 

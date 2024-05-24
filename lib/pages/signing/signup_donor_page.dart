@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:my_app/pages/home_page.dart';
 import 'package:my_app/pages/signing/signup_org_page.dart';
 import 'package:my_app/pages/signing/signin_page.dart';
+import 'package:my_app/providers/donor_provider.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
+import '../../models/donor.dart';
 
 class SignUpDonor extends StatefulWidget {
   const SignUpDonor({super.key});
@@ -170,8 +172,14 @@ class _SignUpDonorState extends State<SignUpDonor> {
               .authService
               .signUp(email!, password!);
 
-        // Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(title: "App Title")));
-        if (mounted) Navigator.pop(context);
+            await context
+              .read<DonorProvider>()
+              .donorService
+              .addDonor(email!, name!, username!, address!, contactNo!);
+
+        if (mounted){
+          Navigator.pop(context);
+        }
       }
       // add as valid user 
     },
