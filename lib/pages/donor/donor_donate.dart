@@ -13,9 +13,15 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:my_app/pages/donor/form/category.dart';
-import 'package:my_app/pages/donor/form/unit.dart';
+import 'package:my_app/providers/donation_provider.dart';
+import 'package:provider/provider.dart';
 
+
+import '../../models/donation.dart';
+import 'form/address.dart';
+import 'form/other_category.dart';
+import 'form/contactno.dart';
+import 'form/unit.dart';
 import 'form/weight.dart';
 
 
@@ -27,6 +33,12 @@ class DonorDonate extends StatefulWidget {
 }
 
 class _DonorDonateState extends State<DonorDonate> {
+
+  //
+  String orgid = "Org id";
+  String orgname = "Org name";
+  String donorid = "Donor id";
+
   static final List<String> _categories = ["Food", "Clothes", "Necessities", "Others"];
   static final List<String> _modes = ["Pick up", "Drop off"];
   
@@ -39,7 +51,10 @@ class _DonorDonateState extends State<DonorDonate> {
   String dateSelected = "";
   // time
 
-  String _mode = _modes.first;
+  String mode = _modes.first;
+  bool isPickUp = true;
+  String address = "";
+  String contact = "";
 
   // controller
   final _datecontroller = TextEditingController();
@@ -69,7 +84,7 @@ class _DonorDonateState extends State<DonorDonate> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                donateToOrg("Org name"),    // pass selected org name to this page
+                donateToOrg(orgname),    // pass selected org name to this page
                 
                 const Divider(),
                 const Align(
@@ -101,11 +116,9 @@ class _DonorDonateState extends State<DonorDonate> {
                 // * Text field for input of other category
                 Offstage(
                   offstage: !othersSelected,
-                  child: OtherCategory((String val) => category = val),
+                  child: OtherCategory(othersSelected, (String val) => category = val),
                 ),
                 
-                // othersSelected ? Text("Others selected") : Text("Others not selected"),
-
                 // * Input weight and its unit ----------
                 Row(
                   children: [
@@ -131,8 +144,7 @@ class _DonorDonateState extends State<DonorDonate> {
                   ),
                   readOnly: true,
                   validator: (val) {
-                    // make sure date is in the future
-                    if(val==null) return "Invalid";
+                    if(val==null || val.isEmpty) return "Invalid date";
                     return null;
                   },
                   onTap: () {
@@ -142,10 +154,19 @@ class _DonorDonateState extends State<DonorDonate> {
 
                 // * Pick mode  ----------
                 DropdownButtonFormField(
-                  value: _mode,
+                  value: mode,
                   onChanged: (val) {
                     setState(() {
-                      _mode = val!;
+                      if(val == "Pick up"){
+                        setState(() {
+                          isPickUp = true;
+                        });
+                      }else{
+                        setState(() {
+                          isPickUp = false;
+                        });
+                      }
+                      mode = val!;
                     });
                   },
                   items: _modes.map((String mode) {
@@ -156,17 +177,54 @@ class _DonorDonateState extends State<DonorDonate> {
                   }).toList(),
                 ),
 
-                // offstage isPickUp ? pickup : drop off
+                // * For Pick up: Address and Contact No ----------
+                Offstage(
+                  offstage: !isPickUp,
+                  child: Address( isPickUp, (String val) => address = val),
+                ),
+
+                Offstage(
+                  offstage: !isPickUp,
+                  child: ContactNo( isPickUp, (String val) => contact = val),
+                ),
+
+                // * For Drop off: QR Generation ----------
+                Offstage(
+                  offstage: isPickUp,
+                  child: Text("Drop off is picked. Generate QR...")
+                ),
 
 
                 // * Testing
                 ElevatedButton(
                   onPressed: () {
+                    print(_formKey.currentState!.validate());
                     if(_formKey.currentState!.validate()){
                       print(category);
                       print(weight);
                       print(unit);
                       print(dateSelected);
+                      print(mode);
+
+                      // Donation Object
+                      Donation newDonation = Donation(
+                        org: orgid,
+                        donor: donorid,
+                        category: category,
+                        pickUp: isPickUp,
+                        weight: weight,
+                        unit: unit,
+                        date: dateSelected,
+                        contactNo: contact,
+                        status: "Pending",
+                        address: address,
+                        // TODO: qr code   
+                      );
+
+                      // store to db
+                      context.read<DonorDonationProvider>().addDonation(newDonation);
+
+
                     }
                   }, 
                   child: Text("Display input")
@@ -190,8 +248,8 @@ class _DonorDonateState extends State<DonorDonate> {
   Future<void> _selectDate() async {
     DateTime? picked = await showDatePicker(
       context: context, 
-      initialDate: DateTime.now() ,
-      firstDate: DateTime(2000), 
+      initialDate: DateTime.now().add(const Duration(days: 1)) ,
+      firstDate: DateTime.now().add(const Duration(days: 1)), 
       lastDate: DateTime(2100)
     );
 
@@ -204,6 +262,8 @@ class _DonorDonateState extends State<DonorDonate> {
     setState(() {
       dateSelected = _datecontroller.text;
     });
+
+    print(dateSelected);
 
   }
 

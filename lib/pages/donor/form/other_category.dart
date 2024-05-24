@@ -5,8 +5,9 @@
 import 'package:flutter/material.dart';
 
 class OtherCategory extends StatefulWidget {
+  final bool otherSelected;
   final Function callback;
-  const OtherCategory(this.callback, {super.key});
+  const OtherCategory(this.otherSelected, this.callback, {super.key});
 
   @override
   State<OtherCategory> createState() => _OtherCategoryState();
@@ -28,10 +29,12 @@ class _OtherCategoryState extends State<OtherCategory> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: _controller,
-      // validator: (val) {
-      //   // if(val==null) return "Invalid";
-      //   // return null;
-      // },
+      validator: (val) {
+        if(widget.otherSelected == true && (val == null || val.isEmpty)) {
+          return "Invalid category!";
+        }
+        return null;
+      },
       onChanged: (val) {
         setState(() {
           _category = val;

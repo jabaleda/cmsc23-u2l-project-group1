@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Weight extends StatefulWidget {
   final Function callback;
@@ -24,10 +25,12 @@ class _WeightState extends State<Weight> {
     return Expanded(
       child: TextFormField(
         controller: _controller,
-        keyboardType: TextInputType.number,
-        // validator: (val) {
-        //   // validate
-        // },
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))],
+        validator: (val) {
+          if(val==null || val.isEmpty) return "Invalid weight!";
+          return null;
+        },
         onChanged: (val) {
           widget.callback(_controller.text);
         },
