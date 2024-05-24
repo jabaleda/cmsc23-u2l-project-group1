@@ -4,6 +4,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/pages/admin/admin_page.dart';
+import 'package:my_app/pages/donor/donor_home.dart';
+import 'package:my_app/pages/org/org_home.dart';
 import 'package:provider/provider.dart';
 import 'home_page.dart';
 import '../providers/auth_provider.dart';
@@ -39,6 +41,16 @@ class _HomePageState extends State<HomePage> {
           } else if (!snapshot.hasData) {
             return const SignInPage();//if no user
           }
+
+          // if(snapshot.data?.type = "donor")
+          // {
+          //   return const DonorHome();
+          // }
+
+          // if(snapshot.data?.type = "org")
+          // {
+          //   return const OrganizationHome();
+          // }
 
           if(snapshot.data?.email! == "aa@gmail.com")
           {
