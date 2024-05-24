@@ -76,7 +76,6 @@ class _MyHomePageState extends State<MyHomePage> {
     margin: const EdgeInsets.all(20),
     child: ElevatedButton(
       onPressed: () {
-        Navigator.pop(context);
         Navigator.pushNamed(context, "/organization");
       }, 
       child: Text("Organization's View")

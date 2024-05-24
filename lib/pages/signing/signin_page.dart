@@ -15,7 +15,7 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   final _formKey = GlobalKey<FormState>();
-  String? user;
+  String? email;
   String? password;
   bool showSignInErrorMessage = false;
 
@@ -31,7 +31,7 @@ class _SignInPageState extends State<SignInPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   heading,
-                  usernameField,
+                  emailField,
                   passwordField,
                   submitButton, 
                   asDonorButton
@@ -50,17 +50,17 @@ class _SignInPageState extends State<SignInPage> {
         ),
       );
 
-  Widget get usernameField => Padding(
+  Widget get emailField => Padding(
         padding: const EdgeInsets.only(bottom: 30),
         child: TextFormField(
           decoration: const InputDecoration(
               border: OutlineInputBorder(),
-              label: Text("Username"),
-              hintText: "Enter your username here"),
-          onSaved: (value) => setState(() => user = value),
+              label: Text("Email"),
+              hintText: "Enter your email here"),
+          onSaved: (value) => setState(() => email = value),
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return "Please enter a valid username";
+              return "Please enter a valid email";
             }
             return null;
           },
@@ -89,7 +89,7 @@ class _SignInPageState extends State<SignInPage> {
       onPressed: () async {
         if (_formKey.currentState!.validate()) {
           _formKey.currentState!.save();
-          String? message = await context.read<UserAuthProvider>().authService.signIn(user!, password!, context);
+          String? message = await context.read<UserAuthProvider>().authService.signIn(email!, password!, context);
 
           print(message);
           print(showSignInErrorMessage);
@@ -105,12 +105,15 @@ class _SignInPageState extends State<SignInPage> {
       },
       child: const Text("Sign In"));
 
-  
-  Widget get asDonorButton => TextButton(
-    onPressed: () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpDonor()));
-    },
-    child: Text("Dont have an account? Sign up")
-  );
 
+  Widget get asDonorButton => Padding(padding: const EdgeInsets.only(left: 30),
+    child: Row(children: [
+      const Text("Don't have an account?"),
+      TextButton(
+      onPressed: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpDonor()));
+      },
+      child: Text("Sign up instead")
+    )],),
+  );
 }
