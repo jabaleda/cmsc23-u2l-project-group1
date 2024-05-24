@@ -9,6 +9,8 @@ import 'package:my_app/pages/org/org_profile.dart';
 import 'package:my_app/pages/signing/admin_signin.dart';
 import 'package:my_app/pages/signing/signup_donor_page.dart';
 import 'package:my_app/providers/auth_provider.dart';
+import 'package:my_app/providers/donation_provider.dart';
+import 'package:provider/provider.dart';
 import 'pages/signing/admin_signin.dart';
 import 'pages/signing/signin_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,6 +26,7 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: ((context) => DonorDonationProvider()))// providers
         ChangeNotifierProvider(create: ((context) => UserAuthProvider()))
       ],
       child: MyApp(),

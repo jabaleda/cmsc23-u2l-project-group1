@@ -8,11 +8,11 @@ class Donation {
   String? id;
   String org;
   String donor;      // identifier. username?
-  String category;
+  // String category;
   bool pickUp;
   double weight;     // type=number in db
   String unit;
-  String date;       //
+  // String date;       //
   String status;
 
   // for pick up == true
@@ -26,11 +26,11 @@ class Donation {
     this.id,
     required this.org,
     required this.donor,
-    required this.category,
+    // required this.category,
     required this.pickUp,
     required this.weight,
     required this.unit,
-    required this.date,
+    // required this.date,
     required this.status,
     this.address,
     this.contactNo
@@ -42,14 +42,14 @@ class Donation {
       id: json['id'],
       org: json['org'],
       donor: json['donor'],
-      category: json['category'],
+      // category: json['category'],
       pickUp: json['pickUp'],
-      weight: json['weight'],
+      weight: json['weight'].toDouble(),
       unit: json['unit'],
-      date: json['date'],
+      // date: json['date'],
       status: json['status'],
       address: json['address'],
-      contactNo: json['contactNo']
+      contactNo: json['contactno']
       // QR code
     );
   }
@@ -63,11 +63,11 @@ class Donation {
     return {
       'org': donation.org,
       'donor': donation.donor,
-      'category': donation.category,
+      // 'category': donation.category,
       'pickUp': donation.pickUp,
       'weight': donation.weight,
       'unit': donation.unit,
-      'date': donation.date,
+      // 'date': donation.date,
       'status': donation.status,
       'address': donation.address,
       'contactNo': donation.contactNo
