@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:my_app/pages/home_page.dart';
 import 'package:my_app/pages/signing/signup_org_page.dart';
 import 'package:my_app/pages/signing/signin_page.dart';
+import 'package:provider/provider.dart';
+import '../../providers/auth_provider.dart';
 
 class SignUpDonor extends StatefulWidget {
   const SignUpDonor({super.key});
@@ -159,10 +161,17 @@ class _SignUpDonorState extends State<SignUpDonor> {
 
 
   Widget get submitButton => ElevatedButton(
-    onPressed: () {
+    onPressed: () async {
       if(_formKey.currentState!.validate()) {
+        _formKey.currentState!.save();
         // test
-        Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(title: "App Title")));
+            await context
+              .read<UserAuthProvider>()
+              .authService
+              .signUp(email!, password!);
+
+        // Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(title: "App Title")));
+        if (mounted) Navigator.pop(context);
       }
       // add as valid user 
     },
@@ -180,7 +189,7 @@ class _SignUpDonorState extends State<SignUpDonor> {
   Widget get asAdminButton => TextButton(
     onPressed: () {
       Navigator.pop(context);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => SignInPage()));
+      // Navigator.push(context, MaterialPageRoute(builder: (context) => SignInPage()));
     },
     child: Text("Already have an account? Sign in instead")
   );

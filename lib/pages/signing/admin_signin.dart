@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/pages/admin/admin_page.dart';
+import 'package:provider/provider.dart';
+import '../../providers/auth_provider.dart';
 
 
 class AdminSignInPage extends StatefulWidget {
@@ -89,13 +90,20 @@ class _AdminSignInPageState extends State<AdminSignInPage> {
         if (_formKey.currentState!.validate()) {
           _formKey.currentState!.save();
 
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const AdminPage()),
-          );
+          String? message = await context.read<UserAuthProvider>().authService.signIn(user!, password!, context);
+
+          print(message);
+          print(showSignInErrorMessage);
+
+          if (mounted) Navigator.pop(context);
+
 
           setState(() {
-            //
+            if (message != null && message.isNotEmpty) {
+              showSignInErrorMessage = true;
+            } else {
+              showSignInErrorMessage = false;
+            }
           });
         }
       },

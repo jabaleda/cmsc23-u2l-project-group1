@@ -13,6 +13,7 @@ class _OrganizationProfileState extends State<OrganizationProfile> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Profile"),
+        automaticallyImplyLeading: false,
       ),
       body: Column(
         children: [

@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'signing/admin_signin.dart';
 import 'signing/signin_page.dart';
 import 'package:my_app/pages/donor/donor_home.dart';
+import '../../providers/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -39,6 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // by the _incrementCounter method above.
   
     return Scaffold(
+      drawer: drawer,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
@@ -47,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            toDonor, toOrg, toAdmin
+            toDonor, toOrg
           ],
         ),
       ),
@@ -80,19 +83,30 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   );
 
-  Widget get toAdmin => Container(
-    margin: const EdgeInsets.all(20),
-    child: ElevatedButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const SignInPage()),
-        );
-      }, 
-      child: Text("Admin's View")
-    ),
-  );
+  // Widget get toAdmin => Container(    //removed as admin is already at sign in
+  //   margin: const EdgeInsets.all(20),
+  //   child: ElevatedButton(
+  //     onPressed: () {
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => const SignInPage()),
+  //       );
+  //     }, 
+  //     child: Text("Admin's View")
+  //   ),
+  // );
 
+  Drawer get drawer => Drawer(
+          child: ListView(padding: EdgeInsets.zero, children: [
+        const DrawerHeader(padding: EdgeInsets.fromLTRB(16, 16, 16, 5),child: Center(child: Text("What do you want to do?"))),
+        ListTile(
+          title: const Text('Logout'),
+          onTap: () {
+            context.read<UserAuthProvider>().signOut();
+            Navigator.pop(context);
+          },
+        ),
+      ]));
 }
 
 
