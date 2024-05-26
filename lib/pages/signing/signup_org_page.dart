@@ -13,6 +13,8 @@ import 'package:my_app/pages/signing/signup_donor_page.dart';
 import 'package:my_app/pages/signing/signin_page.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
+import '../../providers/org_provider.dart';
+import '../../models/organization.dart';
 
 class SignUpOrg extends StatefulWidget {
   const SignUpOrg({super.key});
@@ -33,6 +35,7 @@ class _SignUpOrgState extends State<SignUpOrg> {
   String? address;
   String? contactNo;
   String? proof;
+  String? about;
   
   
   @override
@@ -53,6 +56,7 @@ class _SignUpOrgState extends State<SignUpOrg> {
                 usernameField,
                 addressField,
                 contactNoField,
+                aboutField,
                 proofField,
                 submitButton,
                 asDonorButton,
@@ -177,6 +181,21 @@ class _SignUpOrgState extends State<SignUpOrg> {
     ),
   );
 
+  Widget get aboutField => Padding(
+    padding: const EdgeInsets.only(bottom: 30),
+    child: TextFormField(
+      decoration:
+          const InputDecoration(border: OutlineInputBorder(), label: Text("About"), hintText: "What is the organization about?"),
+      onSaved: (value) => setState(() => about = value),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Please enter your about info";
+        }
+        return null;
+      },
+    ),
+  );
+
   // other fields
 
 
@@ -189,9 +208,16 @@ class _SignUpOrgState extends State<SignUpOrg> {
           .read<UserAuthProvider>()
           .authService
           .signUp(email!, password!);
-        // Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(title: "App Title")));
-        // Navigator.pushNamed(context, "/organization");
-        if (mounted) Navigator.pop(context);
+
+
+        await context
+          .read<OrgProvider>()
+          .orgService
+          .addOrg(email!, orgname!, username!, address!, contactNo!, about!, proof!);
+
+        if (mounted){
+          Navigator.pop(context);
+        }
       }
       // add as valid user 
     },
