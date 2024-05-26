@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/pages/admin/admin_page.dart';
+import 'package:provider/provider.dart';
+import '../../providers/auth_provider.dart';
 
 
 class AdminSignInPage extends StatefulWidget {
@@ -11,7 +12,7 @@ class AdminSignInPage extends StatefulWidget {
 
 class _AdminSignInPageState extends State<AdminSignInPage> {
   final _formKey = GlobalKey<FormState>();
-  String? user;
+  String? email;
   String? password;
   bool showSignInErrorMessage = false;
 
@@ -31,7 +32,7 @@ class _AdminSignInPageState extends State<AdminSignInPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   heading,
-                  usernameField,
+                  emailField,
                   passwordField,
                   submitButton
                 ],
@@ -49,17 +50,17 @@ class _AdminSignInPageState extends State<AdminSignInPage> {
         ),
       );
 
-  Widget get usernameField => Padding(
+  Widget get emailField => Padding(
         padding: const EdgeInsets.only(bottom: 30),
         child: TextFormField(
           decoration: const InputDecoration(
               border: OutlineInputBorder(),
-              label: Text("Username"),
-              hintText: "Enter your username here"),
-          onSaved: (value) => setState(() => user = value),
+              label: Text("Email"),
+              hintText: "Enter your email here"),
+          onSaved: (value) => setState(() => email = value),
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return "Please enter a valid username";
+              return "Please enter a valid email";
             }
             return null;
           },
@@ -89,13 +90,20 @@ class _AdminSignInPageState extends State<AdminSignInPage> {
         if (_formKey.currentState!.validate()) {
           _formKey.currentState!.save();
 
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const AdminPage()),
-          );
+          String? message = await context.read<UserAuthProvider>().authService.signIn(email!, password!, context);
+
+          print(message);
+          print(showSignInErrorMessage);
+
+          if (mounted) Navigator.pop(context);
+
 
           setState(() {
-            //
+            if (message != null && message.isNotEmpty) {
+              showSignInErrorMessage = true;
+            } else {
+              showSignInErrorMessage = false;
+            }
           });
         }
       },

@@ -5,7 +5,11 @@ class FirebaseAuthAPI {
 
   static final FirebaseAuth auth = FirebaseAuth.instance;
 
-  Stream<User?> getUser() {
+  User? getUser(){
+    return auth.currentUser;
+  }
+
+  Stream<User?> getSignedIn() {
     return auth.authStateChanges();
   }
 
@@ -19,7 +23,7 @@ class FirebaseAuthAPI {
       return(credential.toString());
 
       } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
+      if (e.code == 'user-not-found') { 
         return('No user found for that email.');
       } 
       else if (e.code == 'wrong-password') {

@@ -4,26 +4,44 @@ import 'dart:convert';
 class Organization {//for organization details
   String? name;
   String? id;
+  String? type;
   String? about;
   bool statusDonation;
   bool statusApproved;
+  String? username;
+  String? email;
+  String? address;
+  String? contactNo;
+  String? proof;
 
   Organization({
     required this.name,
     this.id,
+    required this.type,
     required this.about,
     required this.statusDonation,
-    required this.statusApproved
+    required this.statusApproved,
+    required this.username,
+    required this.email,
+    required this.address,
+    required this.contactNo,
+    required this.proof
 
   });
 
   factory Organization.fromJson(Map<String, dynamic> json) {
     return Organization(
-      name: json['email'],
+      name: json['name'],
       id: json['id'],
-      about: json['fname'],
+      about: json['about'],
       statusDonation: json['statusDonation'],
       statusApproved: json['statusApproved'],
+      type: json['type'],
+      username: json['username'],
+      email: json['email'],
+      address: json['address'],
+      contactNo: json['contactNo'],
+      proof: json['proof']
     );
   }
 
@@ -37,7 +55,13 @@ class Organization {//for organization details
       'name': org.name,
       'about': org.about,
       'statusDonation': org.statusDonation,
-      'statusApproved': org.statusApproved
+      'statusApproved': org.statusApproved,
+      'type': org.type,
+      'username': org.username,
+      'email': org.email,
+      'address': org.address,
+      'contactNo': org.contactNo,
+      'proof': org.proof
     };
   }
 }

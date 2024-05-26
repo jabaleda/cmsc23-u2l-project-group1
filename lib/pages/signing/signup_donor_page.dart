@@ -7,6 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:my_app/pages/home_page.dart';
 import 'package:my_app/pages/signing/signup_org_page.dart';
 import 'package:my_app/pages/signing/signin_page.dart';
+import 'package:my_app/providers/donor_provider.dart';
+import 'package:provider/provider.dart';
+import '../../providers/auth_provider.dart';
+import '../../models/donor.dart';
 
 class SignUpDonor extends StatefulWidget {
   const SignUpDonor({super.key});
@@ -159,10 +163,23 @@ class _SignUpDonorState extends State<SignUpDonor> {
 
 
   Widget get submitButton => ElevatedButton(
-    onPressed: () {
+    onPressed: () async {
       if(_formKey.currentState!.validate()) {
+        _formKey.currentState!.save();
         // test
-        Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(title: "App Title")));
+            await context
+              .read<UserAuthProvider>()
+              .authService
+              .signUp(email!, password!);
+
+            await context
+              .read<DonorProvider>()
+              .donorService
+              .addDonor(email!, name!, username!, address!, contactNo!);
+
+        if (mounted){
+          Navigator.pop(context);
+        }
       }
       // add as valid user 
     },
@@ -177,12 +194,17 @@ class _SignUpDonorState extends State<SignUpDonor> {
     child: Text("Sign Up as Org")
   );
 
-  Widget get asAdminButton => TextButton(
-    onPressed: () {
-      Navigator.pop(context);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => SignInPage()));
-    },
-    child: Text("Already have an account? Sign in instead")
+  Widget get asAdminButton => Padding(
+    padding: const EdgeInsets.only(left: 30),
+    child: Row(children: [
+      const Text("Already have an account?"),
+      TextButton(
+      onPressed: () {
+        Navigator.pop(context);
+        // Navigator.push(context, MaterialPageRoute(builder: (context) => SignInPage()));
+      },
+      child: Text("Sign in instead")
+    )],),
   );
 
 

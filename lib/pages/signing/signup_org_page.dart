@@ -11,6 +11,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/pages/signing/signup_donor_page.dart';
 import 'package:my_app/pages/signing/signin_page.dart';
+import 'package:provider/provider.dart';
+import '../../providers/auth_provider.dart';
+import '../../providers/org_provider.dart';
+import '../../models/organization.dart';
 
 class SignUpOrg extends StatefulWidget {
   const SignUpOrg({super.key});
@@ -31,6 +35,7 @@ class _SignUpOrgState extends State<SignUpOrg> {
   String? address;
   String? contactNo;
   String? proof;
+  String? about;
   
   
   @override
@@ -51,6 +56,7 @@ class _SignUpOrgState extends State<SignUpOrg> {
                 usernameField,
                 addressField,
                 contactNoField,
+                aboutField,
                 proofField,
                 submitButton,
                 asDonorButton,
@@ -175,15 +181,43 @@ class _SignUpOrgState extends State<SignUpOrg> {
     ),
   );
 
+  Widget get aboutField => Padding(
+    padding: const EdgeInsets.only(bottom: 30),
+    child: TextFormField(
+      decoration:
+          const InputDecoration(border: OutlineInputBorder(), label: Text("About"), hintText: "What is the organization about?"),
+      onSaved: (value) => setState(() => about = value),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Please enter your about info";
+        }
+        return null;
+      },
+    ),
+  );
+
   // other fields
 
 
   Widget get submitButton => ElevatedButton(
-    onPressed: () {
+    onPressed: () async {
       if(_formKey.currentState!.validate()) {
+        _formKey.currentState!.save();
         // test
-        // Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(title: "App Title")));
-        Navigator.pushNamed(context, "/organization");
+        await context
+          .read<UserAuthProvider>()
+          .authService
+          .signUp(email!, password!);
+
+
+        await context
+          .read<OrgProvider>()
+          .orgService
+          .addOrg(email!, orgname!, username!, address!, contactNo!, about!, proof!);
+
+        if (mounted){
+          Navigator.pop(context);
+        }
       }
       // add as valid user 
     },
@@ -198,12 +232,17 @@ class _SignUpOrgState extends State<SignUpOrg> {
     child: Text("Sign Up as Donor")
   );
 
-  Widget get asAdminButton => TextButton(
-    onPressed: () {
-      Navigator.pop(context);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => SignInPage()));
-    },
-    child: Text("Already have an account? Sign in instead")
+  Widget get asAdminButton => Padding(
+    padding: const EdgeInsets.only(left: 30),
+    child: Row(children: [
+      const Text("Already have an account?"),
+      TextButton(
+      onPressed: () {
+        Navigator.pop(context);
+        // Navigator.push(context, MaterialPageRoute(builder: (context) => SignInPage()));
+      },
+      child: Text("Sign in instead")
+    )],),
   );
 
 
