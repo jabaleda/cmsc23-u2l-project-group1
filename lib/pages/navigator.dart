@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:my_app/pages/admin/admin_page.dart';
 import 'package:my_app/pages/donor/donor_home.dart';
 import 'package:my_app/pages/org/org_home.dart';
+import 'package:my_app/pages/signing/signin_page.dart';
 import 'package:my_app/providers/donor_provider.dart';
 import 'package:provider/provider.dart';
 import 'home_page.dart';
