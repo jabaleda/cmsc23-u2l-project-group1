@@ -1,18 +1,26 @@
+/*
+  * Commit: 
+    Changes:
+    - changed declaration of required fields to be non-nullable
+    - String address -> List<String> address
+    - 
+*/
+
 
 import 'dart:convert';
 
 class Organization {//for organization details
-  String? name;
+  String name;
   String? id;
-  String? type;
-  String? about;
+  String type;
+  String about;
   bool statusDonation;
   bool statusApproved;
-  String? username;
-  String? email;
-  String? address;
-  String? contactNo;
-  String? proof;
+  String username;
+  String email;
+  List<String> address;
+  String contactNo;
+  String proof;
 
   Organization({
     required this.name,
@@ -39,7 +47,7 @@ class Organization {//for organization details
       type: json['type'],
       username: json['username'],
       email: json['email'],
-      address: json['address'],
+      address: List.from(json['address']),
       contactNo: json['contactNo'],
       proof: json['proof']
     );

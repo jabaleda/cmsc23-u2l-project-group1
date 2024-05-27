@@ -82,7 +82,7 @@ class _DonorDonationsState extends State<DonorDonations> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => DDonationDetail()),
-                    );
+                          );
                         },
                       );
                     }) 

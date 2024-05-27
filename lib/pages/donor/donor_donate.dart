@@ -26,7 +26,9 @@ import 'form/weight.dart';
 
 
 class DonorDonate extends StatefulWidget {
-  const DonorDonate({super.key});
+  final String org_id;
+  final String org_name;
+  const DonorDonate(this.org_id, this.org_name, {super.key});
 
   @override
   State<DonorDonate> createState() => _DonorDonateState();
@@ -35,7 +37,7 @@ class DonorDonate extends StatefulWidget {
 class _DonorDonateState extends State<DonorDonate> {
 
   //
-  String orgid = "Org id";
+  // String orgid = widget.org_id;
   String orgname = "Org name";
   String donorid = "Donor id";
 
@@ -84,7 +86,7 @@ class _DonorDonateState extends State<DonorDonate> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                donateToOrg(orgname),    // pass selected org name to this page
+                donateToOrg(widget.org_name),    // pass selected org name to this page
                 
                 const Divider(),
                 const Align(
@@ -208,7 +210,7 @@ class _DonorDonateState extends State<DonorDonate> {
 
                       // Donation Object
                       Donation newDonation = Donation(
-                        org: orgid,
+                        org: widget.org_id,
                         donor: donorid,
                         category: category,
                         pickUp: isPickUp,
