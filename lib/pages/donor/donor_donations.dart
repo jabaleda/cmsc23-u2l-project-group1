@@ -81,7 +81,7 @@ class _DonorDonationsState extends State<DonorDonations> {
                           // pass the donation id as args to retrieve info
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => DDonationDetail()),
+                            MaterialPageRoute(builder: (context) => DDonationDetail(donation)),
                           );
                         },
                       );
