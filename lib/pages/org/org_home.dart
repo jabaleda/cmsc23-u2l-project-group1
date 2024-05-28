@@ -1,8 +1,12 @@
 // Organization Home Page
 // Display list of donations
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app/models/donation.dart';
 import 'package:my_app/pages/org/org_drives.dart';
 import 'package:my_app/pages/org/org_profile.dart';
+import 'package:my_app/providers/donation_provider.dart';
+import 'package:provider/provider.dart';
 
 class OrganizationHome extends StatefulWidget {
   const OrganizationHome({super.key});
@@ -63,18 +67,46 @@ class _DonationListState extends State<DonationList> {
 
   @override
   Widget build(BuildContext context) {
+    Stream<QuerySnapshot> donoStream = context.watch<DonorDonationProvider>().donations;
     return Scaffold(
       appBar: AppBar(
         title: Text("Home"),
         automaticallyImplyLeading: false,
       ),
       body: 
+        StreamBuilder(
+          stream: donoStream,
+          builder:(context, snapshot) {
+            if(snapshot.hasError) {
+              return Center(child: Text("Error! ${snapshot.error}"),);
+            }
+            else if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            else if(!snapshot.hasData) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Donations are empty")
+                  ],
+                ),
+              );
+            }
+
+            return(
+
         ListView.builder(
-          itemCount: 1,
+          itemCount: snapshot.data?.docs.length,
           itemBuilder: (context, index) {
+            Donation dono = Donation.fromJson(
+              snapshot.data?.docs[index].data() as Map<String, dynamic>
+            );
             return ListTile(
-              title: Text("McDonalds"),
-              subtitle: Text("Pending"),
+              title: Text(dono.donor),
+              subtitle: Text(dono.status),
               trailing: IconButton(
                 onPressed: () {
                 },
@@ -116,7 +148,11 @@ class _DonationListState extends State<DonationList> {
               },
             );
           }
-        ),
+        )
+            );
+            },
+        )
+
     );
   }
 }
