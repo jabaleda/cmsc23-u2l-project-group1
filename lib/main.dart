@@ -11,6 +11,7 @@ import 'package:my_app/pages/signing/signup_donor_page.dart';
 import 'package:my_app/providers/auth_provider.dart';
 import 'package:my_app/providers/donation_provider.dart';
 import 'package:my_app/providers/donor_provider.dart';
+import 'package:my_app/providers/drive_provider.dart';
 import 'package:my_app/providers/org_provider.dart';
 import 'package:provider/provider.dart';
 import 'pages/signing/admin_signin.dart';
@@ -31,7 +32,8 @@ Future<void> main() async {
         ChangeNotifierProvider(create: ((context) => DonorDonationProvider())),// providers
         ChangeNotifierProvider(create: ((context) => UserAuthProvider())),
         ChangeNotifierProvider(create: ((context) => DonorProvider())),
-        ChangeNotifierProvider(create: ((context) => OrgProvider()))
+        ChangeNotifierProvider(create: ((context) => OrgProvider())),
+        ChangeNotifierProvider(create: ((context) => DriveProvider()))
       ],
       child: MyApp(),
     ),
