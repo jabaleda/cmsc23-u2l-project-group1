@@ -5,20 +5,20 @@ import 'package:my_app/models/donation_drive.dart';
 class FirebaseDriveAPI {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
 
-  Stream<QuerySnapshot> getAllDrives() { //get all orgs
+  Stream<QuerySnapshot> getAllDrives() { 
     return db.collection("donationDrives").snapshots();
   }
 
-  Future<String> addDrive(String name, String desc, List<Donation> donations) async { //adding an org
+  Future<String> addDrive(String name, String desc, List<Donation> donations) async { 
     try {
-      DonationDrive org = DonationDrive(//making object for db
+      DonationDrive drive = DonationDrive(//making object for db
               name: name,
               desc: desc,
               donations: donations,
               );
-      final neworg = org.toJson(org);
+      final newDrive = drive.toJson(drive);
 
-      await db.collection("organizations").add(neworg);
+      await db.collection("donationDrives").add(newDrive);
       return "Successfully added!";
 
     } on FirebaseException catch (e) {
