@@ -23,6 +23,10 @@ class UserAuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<bool> getType(String? email) async {
+    return authService.getEmailOrg(email!);
+  }
+
   Future<void> signUp(String email, String password) async {
     await authService.signUp(email, password); 
     notifyListeners();

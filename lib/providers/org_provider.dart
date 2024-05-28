@@ -52,10 +52,15 @@ class OrgProvider with ChangeNotifier {
 
 
 
-  void addOrg(String email, String name, String username, List<String> address, String contactNo, String about, String proof) async {
+  void addOrg(String email, String name, String username, String address, String contactNo, String about, String proof) async {
     // add to db
     String message = await orgService.addOrg(email, name, username, address, contactNo, about, proof);
     print(message);
+    notifyListeners();
+  }
+
+  void toggleStatus(String id, bool status) async {
+    await orgService.toggleStatus(id, status);
     notifyListeners();
   }
 

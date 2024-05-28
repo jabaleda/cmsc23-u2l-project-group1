@@ -32,7 +32,7 @@ class _SignUpOrgState extends State<SignUpOrg> {
   String? username;
   String? email;
   String? password;
-  List<String>? address;
+  String? address;
   String? contactNo;
   String? proof;
   String? about;
@@ -141,7 +141,7 @@ class _SignUpOrgState extends State<SignUpOrg> {
     child: TextFormField(
       decoration:
           const InputDecoration(border: OutlineInputBorder(), label: Text("Address"), hintText: "#, St., Barangay, City"),
-      onSaved: (value) => setState(() => address?[0] = value!),
+      onSaved: (value) => setState(() => address = value!),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return "Please enter your address";

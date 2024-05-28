@@ -211,6 +211,7 @@ class _DonorDonateState extends State<DonorDonate> {
                       // Donation Object
                       Donation newDonation = Donation(
                         org: widget.org_id,
+                        orgname: widget.org_name,
                         donor: donorid,
                         category: category,
                         pickUp: isPickUp,

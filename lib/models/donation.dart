@@ -7,6 +7,7 @@ import 'dart:convert';
 class Donation {
   String? id;
   String org;
+  String orgname;
   String donor;      // identifier. username?
   String category;
   bool pickUp;
@@ -33,7 +34,8 @@ class Donation {
     required this.date,
     required this.status,
     this.address,
-    this.contactNo
+    this.contactNo,
+    required this.orgname
     // How to store QR code?
   });
 
@@ -49,7 +51,8 @@ class Donation {
       date: json['date'],
       status: json['status'],
       address: json['address'],
-      contactNo: json['contactno']
+      contactNo: json['contactno'],
+      orgname: json['orgname']
       // QR code
     );
   }
@@ -70,7 +73,8 @@ class Donation {
       'date': donation.date,
       'status': donation.status,
       'address': donation.address,
-      'contactNo': donation.contactNo
+      'contactNo': donation.contactNo,
+      'orgname': donation.orgname
       // QR code
     };
   }

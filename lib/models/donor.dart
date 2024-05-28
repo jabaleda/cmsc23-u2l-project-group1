@@ -11,6 +11,7 @@ class Donor {
   String? address;
   String? contactNo;
   String? type;
+  String? id;
 
   Donor({
     this.name,
@@ -18,7 +19,8 @@ class Donor {
     this.email,
     this.address,
     this.contactNo,
-    this.type
+    this.type,
+    this.id
   });
 
   factory Donor.fromJson(Map<String, dynamic> json) {
@@ -28,7 +30,8 @@ class Donor {
       email: json['email'],
       address: json['address'],
       contactNo: json['contactNo'],
-      type: json['type']
+      type: json['type'],
+      id: json['id']
     );
   }
 
@@ -44,7 +47,8 @@ class Donor {
       'email': donor.email,
       'address': donor.address,
       'contactNo': donor.contactNo,
-      'type': donor.type
+      'type': donor.type,
+      'id': donor.id
     };
   }
 }

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/pages/signing/signin_page.dart';
+import '../../providers/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class OrganizationProfile extends StatefulWidget {
   const OrganizationProfile({super.key});
@@ -22,6 +25,8 @@ class _OrganizationProfileState extends State<OrganizationProfile> {
           TextButton(
             onPressed: () {
               Navigator.pop(context);
+              context.read<UserAuthProvider>().signOut();
+              // Navigator.push(context, MaterialPageRoute(builder: (context) => SignInPage()));
             }, 
             child: Text("Sign Out"))
         ],
