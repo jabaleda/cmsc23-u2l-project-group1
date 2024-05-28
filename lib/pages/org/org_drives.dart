@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app/models/donation_drive.dart';
+import 'package:my_app/providers/drive_provider.dart';
+import 'package:provider/provider.dart';
 
 class OrganizationDrives extends StatefulWidget {
   const OrganizationDrives({super.key});
@@ -8,49 +12,70 @@ class OrganizationDrives extends StatefulWidget {
 }
 
 class _OrganizationDrivesState extends State<OrganizationDrives> {
-  String name = "McDonaldo";
-  String desc = "One of the fast foods of all time";
-  List<String> listOfDonations = [
-    "Cheeseburger",
-    "ChickenFillet"
-  ];
-
   @override
   Widget build(BuildContext context) {
+    Stream<QuerySnapshot> driveStream = context.watch<DriveProvider>().drives;
     return Scaffold(
       appBar: AppBar(
         title: Text("Drives"),
         automaticallyImplyLeading: false,
       ),
-      body: ListView.builder(
-        itemCount: 1,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text("Donation Drive"),
-            trailing: IconButton(
-              onPressed: () {
-                // consider show modal bottom sheet 
-                // delete drive ??
+      body: StreamBuilder(
+        stream: driveStream,
+        builder: (context, snapshot) {
+          if(snapshot.hasError) {
+            return Center(child: Text("Error! ${snapshot.error}"),);
+          }
+          else if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          else if(!snapshot.hasData) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Donation drives are empty")
+                ],
+              ),
+            );
+          }
+        return(
+          ListView.builder(
+          itemCount: snapshot.data?.docs.length,
+          itemBuilder: (context, index) {
+            DonationDrive drive = DonationDrive.fromJson(
+              snapshot.data?.docs[index].data() as Map<String, dynamic>
+            );
+            return ListTile(
+              title: Text(drive.name!),
+              trailing: IconButton(
+                onPressed: () {
+                  // consider show modal bottom sheet 
+                  // delete drive ??
+                },
+                icon: Icon(Icons.more_horiz),
+              ),
+              onTap: () {
+                showModalBottomSheet(context: context, builder: (_){
+                  return Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      children: [
+                        Text(drive.name!, style: TextStyle(fontSize: 20),),
+                        Text(drive.desc!, style: TextStyle(fontSize: 20),),
+                        Text("Donations:", style: TextStyle(fontSize: 20),),
+                      ],
+                    ),
+                  );
+                });
               },
-              icon: Icon(Icons.more_horiz),
-            ),
-            onTap: () {
-              showModalBottomSheet(context: context, builder: (_){
-                return Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    children: [
-                      Text(name, style: TextStyle(fontSize: 20),),
-                      Text(desc, style: TextStyle(fontSize: 20),),
-                      Text("Donations:", style: TextStyle(fontSize: 20),),
-                    ],
-                  ),
-                );
-              });
-            },
-          );
+            );
+          },
+          )); 
         },
-      ),
+        ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // CRUD for Donation Drives
