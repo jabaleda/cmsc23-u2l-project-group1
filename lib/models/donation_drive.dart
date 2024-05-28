@@ -6,7 +6,7 @@ import 'package:my_app/models/donation.dart';
 class DonationDrive {
   String? name;
   String? desc;
-  List<Donation>? donations;
+  List<dynamic>? donations;
 
   DonationDrive({
     this.name,

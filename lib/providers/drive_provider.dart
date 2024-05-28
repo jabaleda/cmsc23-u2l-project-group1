@@ -21,7 +21,7 @@ class DriveProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void addDrive(String name, String desc, List<Donation> donations) async {
+  void addDrive(String name, String desc, List<dynamic> donations) async {
     String message = await driveService.addDrive(name, desc, donations);
     print(message);
     notifyListeners();

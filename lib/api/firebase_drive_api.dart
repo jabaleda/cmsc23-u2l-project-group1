@@ -9,7 +9,7 @@ class FirebaseDriveAPI {
     return db.collection("donationDrives").snapshots();
   }
 
-  Future<String> addDrive(String name, String desc, List<Donation> donations) async { 
+  Future<String> addDrive(String name, String desc, List<dynamic> donations) async { 
     try {
       DonationDrive drive = DonationDrive(//making object for db
               name: name,
