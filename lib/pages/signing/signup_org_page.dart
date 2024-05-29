@@ -10,11 +10,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_app/pages/signing/signup_donor_page.dart';
-import 'package:my_app/pages/signing/signin_page.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/org_provider.dart';
-import '../../models/organization.dart';
 
 class SignUpOrg extends StatefulWidget {
   const SignUpOrg({super.key});

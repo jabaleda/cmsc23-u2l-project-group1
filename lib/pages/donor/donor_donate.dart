@@ -12,7 +12,10 @@
     
 */
 
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app/pages/donor/form/camera_screen.dart';
+import 'package:my_app/pages/donor/form/display.dart';
 import 'package:my_app/providers/donation_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -36,7 +39,10 @@ class DonorDonate extends StatefulWidget {
 
 class _DonorDonateState extends State<DonorDonate> {
 
-  //
+  late List<CameraDescription> cameras;
+  late CameraDescription camera;
+
+  
   // String orgid = widget.org_id;
   String orgname = "Org name";
   String donorid = "Donor id";
@@ -58,8 +64,24 @@ class _DonorDonateState extends State<DonorDonate> {
   String address = "";
   String contact = "";
 
+
+  XFile? image;
+
   // controller
   final _datecontroller = TextEditingController();
+
+
+  @override
+  void initState() {
+    super.initState();
+    availableCameras().then((availableCameras) {
+      cameras = availableCameras;
+      camera = cameras.first;
+    });
+    
+  }
+
+
 
   // dispose
   @override
@@ -196,6 +218,21 @@ class _DonorDonateState extends State<DonorDonate> {
                   child: Text("Drop off is picked. Generate QR...")
                 ),
 
+                // Spacer(),
+
+                ElevatedButton(
+                  onPressed: () async {
+                    print('to camera');
+                    
+                    image = await Navigator.push(
+                      context, 
+                      MaterialPageRoute(
+                        builder: ((context) => CameraScreen(camera: camera))
+                      )
+                    );
+                  }, 
+                  child: Icon(Icons.camera_alt_outlined)
+                ),
 
                 // * Testing
                 ElevatedButton(
@@ -225,11 +262,26 @@ class _DonorDonateState extends State<DonorDonate> {
 
                       // store to db
                       context.read<DonorDonationProvider>().addDonation(newDonation);
-
-
                     }
                   }, 
                   child: Text("Display input")
+                ),
+
+                ElevatedButton(
+                  onPressed: () async {
+                    print("in form: ${image!.path}");
+                    
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => DisplayPictureScreen(
+                          // Pass the automatically generated path to
+                          // the DisplayPictureScreen widget.
+                          imagePath: image!.path,
+                        ),
+                      ),
+                    );
+                  }, 
+                  child: Text("Display image")
                 )
 
 

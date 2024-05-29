@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/pages/home_page.dart';
 import 'package:my_app/pages/org/org_createDrive.dart';
@@ -21,6 +22,7 @@ import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -68,11 +70,4 @@ class MyApp extends StatelessWidget {
 
 
 
-// E9 organization
-/*
-- main() -> async method
-  - multiproviders
-- widget build contains one route only 
-  -> go to entry page.
 
-*/
