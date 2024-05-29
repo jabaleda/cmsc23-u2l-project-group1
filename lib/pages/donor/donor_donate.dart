@@ -15,9 +15,12 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/providers/donation_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+
 
 
 import '../../models/donation.dart';
+import '../../models/organization.dart';
 import 'form/address.dart';
 import 'form/other_category.dart';
 import 'form/contactno.dart';
@@ -26,9 +29,8 @@ import 'form/weight.dart';
 
 
 class DonorDonate extends StatefulWidget {
-  final String org_id;
-  final String org_name;
-  const DonorDonate(this.org_id, this.org_name, {super.key});
+  final Organization org;
+  const DonorDonate(this.org, {super.key});
 
   @override
   State<DonorDonate> createState() => _DonorDonateState();
@@ -58,6 +60,9 @@ class _DonorDonateState extends State<DonorDonate> {
   String address = "";
   String contact = "";
 
+  String qrData = "";
+  bool qrGenerated = false;
+
   // controller
   final _datecontroller = TextEditingController();
 
@@ -86,7 +91,7 @@ class _DonorDonateState extends State<DonorDonate> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                donateToOrg(widget.org_name),    // pass selected org name to this page
+                donateToOrg(widget.org.name),    // pass selected org name to this page
                 
                 const Divider(),
                 const Align(
@@ -162,6 +167,7 @@ class _DonorDonateState extends State<DonorDonate> {
                       if(val == "Pick up"){
                         setState(() {
                           isPickUp = true;
+                          qrGenerated = false;
                         });
                       }else{
                         setState(() {
@@ -193,8 +199,26 @@ class _DonorDonateState extends State<DonorDonate> {
                 // * For Drop off: QR Generation ----------
                 Offstage(
                   offstage: isPickUp,
-                  child: Text("Drop off is picked. Generate QR...")
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // * Unique Identifier for QR
+                      String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
+                      setState(() {
+                        qrData = widget.org.name + timestamp;
+                        qrGenerated = true;
+                      });
+                    },
+                    child: Text("Generate QR Code"),
+                  )
                 ),
+
+                // * QR Image
+                // ? What to do with the generated QR image? Download to device? Store to db?
+                Offstage(
+                  offstage: !(qrGenerated && !isPickUp),
+                  child: qrGenerated ? QrImageView(data: qrData) : Container(),
+                ),
+                
 
 
                 // * Testing
@@ -210,7 +234,7 @@ class _DonorDonateState extends State<DonorDonate> {
 
                       // Donation Object
                       Donation newDonation = Donation(
-                        org: widget.org_id,
+                        org: widget.org.id!,
                         donor: donorid,
                         category: category,
                         pickUp: isPickUp,
@@ -220,12 +244,12 @@ class _DonorDonateState extends State<DonorDonate> {
                         contactNo: contact,
                         status: "Pending",
                         address: address,
-                        // TODO: qr code   
+                        // TODO: qr code  
+                        // TODO: firebase storage url of photo 
                       );
 
                       // store to db
                       context.read<DonorDonationProvider>().addDonation(newDonation);
-
 
                     }
                   }, 
@@ -267,6 +291,16 @@ class _DonorDonateState extends State<DonorDonate> {
 
     print(dateSelected);
 
+  }
+
+
+  Widget showGeneratedQR(String data) {
+    return Container(
+      child: QrImageView(
+        data: data,
+        size: 100,
+      ),
+    );
   }
 
 

@@ -5,6 +5,7 @@ import 'package:my_app/pages/donor/donor_donate.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/org_provider.dart';
+import 'org_details.dart';
 
 class DonorOrgList extends StatefulWidget {
   const DonorOrgList({super.key});
@@ -17,11 +18,9 @@ class _DonorOrgListState extends State<DonorOrgList> {
   @override
   Widget build(BuildContext context) {
 
-    // * fetching of orglist 
-    // // ! Fetch only the Approved Orgs
-    // ! Fetch only the orgs open for donation - statusDonation: true
-
-    Stream<QuerySnapshot> orgListStream = context.watch<OrgProvider>().openOrgs;
+    // * fetching of orglist
+    // ! Fetch only the orgs approved - statusApproved: true
+    Stream<QuerySnapshot> orgListStream = context.watch<OrgProvider>().approvedOrgs;
 
     return Scaffold(
       appBar: AppBar(
@@ -70,12 +69,10 @@ class _DonorOrgListState extends State<DonorOrgList> {
                         title: Text("For ${org.name}"),
                         subtitle: Text("Org description"),
                         onTap: () {
-                          // * redirect to donation form
-                          // * pass org id, 
-                          // ! NOTE: Needs a unique donor identifier (id, email, username)
+                          // * NEW: Display Org Details first
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => DonorDonate(org.id as String, org.name)),
+                            MaterialPageRoute(builder: (context) => OrgDetails(org))
                           );
                         },
                       );
