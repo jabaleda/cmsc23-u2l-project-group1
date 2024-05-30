@@ -12,7 +12,6 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:my_app/pages/signing/signin_page.dart';
 import '../../providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -44,7 +43,7 @@ class _DonorProfileState extends State<DonorProfile> {
             Text("Info"),
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                // Navigator.pop(context);
                 context.read<UserAuthProvider>().signOut();
                 // Navigator.push(context, MaterialPageRoute(builder: (context) => SignInPage()));
               }, 

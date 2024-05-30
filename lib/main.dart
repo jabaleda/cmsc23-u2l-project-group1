@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/pages/home_page.dart';
 import 'package:my_app/pages/org/org_createDrive.dart';
 import 'package:my_app/pages/navigator.dart';
-import 'package:my_app/pages/org/org_donationDetails.dart';
-import 'package:my_app/pages/org/org_drives.dart';
 import 'package:my_app/pages/org/org_home.dart';
 import 'package:my_app/pages/org/org_profile.dart';
-import 'package:my_app/pages/signing/admin_signin.dart';
-import 'package:my_app/pages/signing/signup_donor_page.dart';
 import 'package:my_app/providers/auth_provider.dart';
 import 'package:my_app/providers/donation_provider.dart';
 import 'package:my_app/providers/donor_provider.dart';
 import 'package:my_app/providers/drive_provider.dart';
 import 'package:my_app/providers/org_provider.dart';
+import 'package:my_app/providers/usertype_provider.dart';
 import 'package:provider/provider.dart';
-import 'pages/signing/admin_signin.dart';
-import 'pages/signing/signin_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:provider/provider.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,9 +27,10 @@ Future<void> main() async {
         ChangeNotifierProvider(create: ((context) => UserAuthProvider())),
         ChangeNotifierProvider(create: ((context) => DonorProvider())),
         ChangeNotifierProvider(create: ((context) => OrgProvider())),
-        ChangeNotifierProvider(create: ((context) => DriveProvider()))
+        ChangeNotifierProvider(create: ((context) => DriveProvider())),
+        ChangeNotifierProvider(create: ((context) => UsertypeProvider()))
       ],
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
@@ -52,7 +47,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       initialRoute: '/',
       routes: {
-        // initial route set to HomePage, which gives SIGN IN page by default
+        // initial route set to HomePage, which gives SIGN IN page by default.
+        // * NEW: Checks whether user signed in is donor or org or admin
         '/': (context) => const HomePage(),
 
         '/organization': (context) => const OrganizationHome(),
@@ -69,12 +65,3 @@ class MyApp extends StatelessWidget {
 }
 
 
-
-// E9 organization
-/*
-- main() -> async method
-  - multiproviders
-- widget build contains one route only 
-  -> go to entry page.
-
-*/

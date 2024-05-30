@@ -10,11 +10,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_app/pages/signing/signup_donor_page.dart';
-import 'package:my_app/pages/signing/signin_page.dart';
+import 'package:my_app/providers/usertype_provider.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/org_provider.dart';
-import '../../models/organization.dart';
 
 class SignUpOrg extends StatefulWidget {
   const SignUpOrg({super.key});
@@ -214,6 +213,13 @@ class _SignUpOrgState extends State<SignUpOrg> {
           .read<OrgProvider>()
           .orgService
           .addOrg(email!, orgname!, username!, address!, contactNo!, about!, proof!);
+
+
+        await context
+              .read<UsertypeProvider>()
+              .typeService
+              .addUser(email!, "org");
+
 
         if (mounted){
           Navigator.pop(context);
