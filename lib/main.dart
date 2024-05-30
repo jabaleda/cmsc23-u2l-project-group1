@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
         // * NEW: Checks whether user signed in is donor or org or admin
         '/': (context) => const HomePage(),
 
-        '/organization': (context) => const OrganizationHome(),
+        // '/organization': (context) => const OrganizationHome(),
         '/organizationProfile': (context) => const OrganizationProfile(),
         '/createDrive': (context) => const CreateDonationDrive(),
       },

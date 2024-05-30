@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
           String? email = snapshot.data!.email;
           print("user email: ${snapshot.data!.email}");
 
-          if(snapshot.data?.email! == "aa@gmaiRl.com"){
+          if(snapshot.data?.email! == "aa@gmail.com"){
             // * user is admin
             return const AdminPage();
           } else {
@@ -82,11 +82,14 @@ class _HomePageState extends State<HomePage> {
 
                 if(snapshot.data == "donor"){
                   return DonorHome();
+                }else if(snapshot.data == "org"){
+                  return OrganizationHome(email);
                 }else{
-                  return OrganizationHome();
+                  return const SignInPage();
                 }
               }
             );
+            return const SignInPage();
           }
           // * NEW end ---------
 

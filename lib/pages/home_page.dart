@@ -12,6 +12,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_app/pages/donor/donor_home.dart';
+import 'package:my_app/pages/org/org_home.dart';
 import '../../providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -76,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
     margin: const EdgeInsets.all(20),
     child: ElevatedButton(
       onPressed: () {
-        Navigator.pushNamed(context, "/organization");
+          
       }, 
       child: Text("Organization's View")
     ),

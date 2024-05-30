@@ -5,7 +5,8 @@ import 'package:my_app/providers/drive_provider.dart';
 import 'package:provider/provider.dart';
 
 class OrganizationDrives extends StatefulWidget {
-  const OrganizationDrives({super.key});
+  const OrganizationDrives(this.email, {super.key});
+  final String email;
 
   @override
   State<OrganizationDrives> createState() => _OrganizationDrivesState();
@@ -48,7 +49,10 @@ class _OrganizationDrivesState extends State<OrganizationDrives> {
             DonationDrive drive = DonationDrive.fromJson(
               snapshot.data?.docs[index].data() as Map<String, dynamic>
             );
-            return ListTile(
+
+            if(widget.email == drive.org)
+            {
+              return ListTile(
               title: Text(drive.name!),
               trailing: IconButton(
                 onPressed: () {
@@ -72,6 +76,7 @@ class _OrganizationDrivesState extends State<OrganizationDrives> {
                 });
               },
             );
+            }
           },
           )); 
         },

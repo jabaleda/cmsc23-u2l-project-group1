@@ -5,18 +5,24 @@ import 'package:my_app/pages/org/org_drives.dart';
 import 'package:my_app/pages/org/org_profile.dart';
 
 class OrganizationHome extends StatefulWidget {
-  const OrganizationHome({super.key});
+  const OrganizationHome(this.email, {super.key});
+  final String email;
 
   @override
   State<OrganizationHome> createState() => _OrganizationHomeState();
 }
 
 class _OrganizationHomeState extends State<OrganizationHome> {
-  static List<Widget> pages = <Widget>[
-    DonationList(),
-    OrganizationDrives(),
-    OrganizationProfile(),
-  ];
+  late String getEmail;
+
+  // @override
+  //     void initState() {
+  //     super.initState();
+  //     getEmail = widget.email;
+  //   }
+  
+
+  static List<Widget> pages = <Widget>[];
 
   int currIndex = 0;
 
@@ -27,6 +33,14 @@ class _OrganizationHomeState extends State<OrganizationHome> {
   }
 
   @override
+  void initState() {
+      super.initState();
+      pages = <Widget>[
+      DonationList(),
+      OrganizationDrives(widget.email),
+      OrganizationProfile(),
+      ];
+    }
   Widget build(BuildContext context) {
     return Scaffold(
       body: pages[currIndex],
