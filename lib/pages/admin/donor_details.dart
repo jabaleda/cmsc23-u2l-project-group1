@@ -19,11 +19,11 @@ class _DonorDetailState extends State<DonorDetail> {
       body: Center(child:
       Column(
         children: [
-          Text(widget.donor.name!),
-          Text(widget.donor.username!),
-          Text(widget.donor.email!),
-          Text(widget.donor.address!),
-          Text(widget.donor.contactNo!)
+          Text('Name: ${widget.donor.name!}'),
+          Text('Username: ${widget.donor.username!}'),
+          Text('Email: ${widget.donor.email!}'),
+          Text('Address: ${widget.donor.address!}'),
+          Text('Contact Number: ${widget.donor.contactNo!}')
         ],
       )
       )

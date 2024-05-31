@@ -8,8 +8,8 @@ import '../../providers/donation_provider.dart';
 
 
 class Donations extends StatefulWidget {
-  const Donations(this.id, this.name,{super.key});
-  final String id;
+  const Donations(this.email, this.name,{super.key});
+  final String? email;
   final String name;
 
   @override
@@ -66,7 +66,7 @@ class _DonationsState extends State<Donations> {
                       donation.id = snapshot.data?.docs[index].id;
 
                       // display
-                      if(donation.org == widget.id)
+                      if(donation.org == widget.email)
                       {
                         return ListTile(
                           title: Text("From ${donation.donor} on ${donation.date}"),
@@ -81,6 +81,10 @@ class _DonationsState extends State<Donations> {
                             );
                           },
                         );
+                      }
+                      else
+                      {
+                        return Container();
                       }
                     })        
                   );

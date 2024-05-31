@@ -73,7 +73,7 @@ class _ViewOrganizationState extends State<ViewOrganization> {
 
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Donations(org.id as String, org.name)),
+                            MaterialPageRoute(builder: (context) => Donations(org.email, org.name)),
                           );
                         },
                       );
