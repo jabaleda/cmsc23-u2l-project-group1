@@ -39,8 +39,6 @@ class DonorDonate extends StatefulWidget {
 
 class _DonorDonateState extends State<DonorDonate> {
 
-  String donorid = "Donor id";
-
   static final List<String> _categories = ["Food", "Clothes", "Necessities", "Others"];
   static final List<String> _modes = ["Pick up", "Drop off"];
   
@@ -232,7 +230,7 @@ class _DonorDonateState extends State<DonorDonate> {
 
                       // Donation Object
                       Donation newDonation = Donation(
-                        org: widget.org.id!,
+                        org: widget.org.email!,
                         orgname: widget.org.name,
                         donor: widget.donorEmail,
                         category: category,
