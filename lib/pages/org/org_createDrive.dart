@@ -127,6 +127,7 @@ class _CreateDonationDriveState extends State<CreateDonationDrive> {
                     Navigator.pop(context);
                   }
                 },
+                child: Text("Create")))
             ],
           ),
         ),
