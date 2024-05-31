@@ -59,6 +59,10 @@ class FirebaseOrgAPI {
     }
   }
 
+  Stream<QuerySnapshot> findOrg(String email) {
+    return db.collection("organizations").where("email", isEqualTo: email).snapshots();
+  }
+
   Future<String> toggleStatus(String id, bool status) async {
     try {
       await db.collection("organizations").doc(id).update({"statusApproved": status});

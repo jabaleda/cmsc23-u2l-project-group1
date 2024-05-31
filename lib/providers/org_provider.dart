@@ -63,6 +63,11 @@ class OrgProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Stream<QuerySnapshot> findOrg(String email) {
+    return orgService.findOrg(email);
+    notifyListeners();
+  }
+
   void toggleStatus(String id, bool status) async {
     await orgService.toggleStatus(id, status);
     notifyListeners();

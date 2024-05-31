@@ -1,10 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app/models/organization.dart';
 import 'package:my_app/pages/signing/signin_page.dart';
+import 'package:my_app/providers/org_provider.dart';
+import 'package:path/path.dart';
 import '../../providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class OrganizationProfile extends StatefulWidget {
-  const OrganizationProfile({super.key});
+  final String email;
+  const OrganizationProfile(this.email, {super.key});
 
   @override
   State<OrganizationProfile> createState() => _OrganizationProfileState();
@@ -13,23 +18,80 @@ class OrganizationProfile extends StatefulWidget {
 class _OrganizationProfileState extends State<OrganizationProfile> {
   @override
   Widget build(BuildContext context) {
+    Stream<QuerySnapshot> orgStream = OrgProvider().findOrg(widget.email);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Profile"),
         automaticallyImplyLeading: false,
       ),
-      body: Column(
-        children: [
-          Text("Organization Name"),
-          Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc iaculis mauris id dui scelerisque volutpat. Vestibulum enim dolor, consequat a nibh malesuada, egestas porta ex. Suspendisse eu elit ex. Vivamus et iaculis mi. Nam ornare augue id efficitur semper. Donec volutpat justo nec eleifend placerat. Nunc eros erat, faucibus eget feugiat id, posuere vitae leo. Nulla augue mi, varius quis dapibus quis, eleifend at augue. Nunc sagittis eget felis in pulvinar. Quisque pellentesque vitae velit nec tempus. "),
-          TextButton(
-            onPressed: () {
-              // Navigator.pop(context);
-              context.read<UserAuthProvider>().signOut();
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => SignInPage()));
-            }, 
-            child: Text("Sign Out"))
-        ],
+      body: SingleChildScrollView(
+        child: StreamBuilder(
+          stream: orgStream,
+          builder: (context, snapshot){
+            if (snapshot.hasError) {
+              return Center(
+                child: Text("Error! ${snapshot.error}"),
+              );
+            } else if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (!snapshot.hasData) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [Text("Donations are empty")],
+                ),
+              );
+            }
+
+            Organization org = Organization.fromJson(
+              snapshot.data?.docs[0].data() as Map<String, dynamic>
+            );
+
+            return (
+              Column(
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.account_circle, size: 24,),
+                      Text(
+                        org.name,
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ],
+                  ),
+                  Divider(
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.edit, size: 24,),
+                      Text(
+                        org.about,
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ],
+                  ),
+                  Divider(
+                  ),
+                  SwitchListTile(
+                    title: Text("Status for donation"),
+                    value: org.statusDonation,
+                    onChanged: (bool val) async {
+                    },
+                  ),
+                ],
+              )
+            );
+          },
+        )
       ),
     );
   }

@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => const HomePage(),
 
         // '/organization': (context) => const OrganizationHome(),
-        '/organizationProfile': (context) => const OrganizationProfile(),
+        //'/organizationProfile': (context) => const OrganizationProfile(),
         // '/createDrive': (context) => const CreateDonationDrive(),
       },
       theme: ThemeData(

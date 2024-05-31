@@ -47,7 +47,7 @@ class _OrganizationHomeState extends State<OrganizationHome> {
       pages = <Widget>[
       DonationList(widget.email),
       OrganizationDrives(widget.email),
-      OrganizationProfile(),
+      OrganizationProfile(widget.email),
       ];
     }
   Widget build(BuildContext context) {
