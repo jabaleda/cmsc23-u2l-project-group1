@@ -22,7 +22,7 @@ class _DonorDetailState extends State<DonorDetail> {
           Text(widget.donor.name!),
           Text(widget.donor.username!),
           Text(widget.donor.email!),
-          Text(widget.donor.address!),
+          // Text(widget.donor.address!),
           Text(widget.donor.contactNo!)
         ],
       )

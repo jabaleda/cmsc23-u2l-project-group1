@@ -25,7 +25,7 @@ class _DonorHomeState extends State<DonorHome> {
     _pages = <Widget>[
       DonorOrgList(email),
       DonorDonations(email),
-      DonorProfile(),
+      DonorProfile(email),
     ];
   }
 

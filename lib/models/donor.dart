@@ -5,21 +5,21 @@
 import 'dart:convert';
 
 class Donor {
-  String? name;
-  String? username;
-  String? email;
-  String? address;
-  String? contactNo;
-  String? type;
+  String name;
+  String username;
+  String email;
+  List<String> address;
+  String contactNo;
+  String type;
   String? id;
 
   Donor({
-    this.name,
-    this.username,
-    this.email,
-    this.address,
-    this.contactNo,
-    this.type,
+    required this.name,
+    required this.username,
+    required this.email,
+    required this.address,
+    required this.contactNo,
+    required this.type,
     this.id
   });
 
@@ -28,7 +28,7 @@ class Donor {
       name: json['name'],
       username: json['username'],
       email: json['email'],
-      address: json['address'],
+      address: List.from(json['address']),
       contactNo: json['contactNo'],
       type: json['type'],
       id: json['id']

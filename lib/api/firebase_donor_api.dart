@@ -9,7 +9,12 @@ class FirebaseDonorAPI {
     return db.collection("donors").snapshots();
   }
 
-  Future<String> addDonor(String email, String name, String username, String address, String contactNo) async { //adding a donor
+
+  Stream<QuerySnapshot> getThisDonor(String email){
+    return db.collection("donors").where("email", isEqualTo: email).snapshots();
+  }
+
+  Future<String> addDonor(String email, String name, String username, List<String> address, String contactNo) async { //adding a donor
     try {
       Donor donor = Donor(//making object for db
               type: 'donor',
