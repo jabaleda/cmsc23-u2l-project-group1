@@ -75,7 +75,15 @@ class _DonorProfileState extends State<DonorProfile> {
                       Text(donor.name),
                       Text(donor.username),
                       Text(donor.contactNo),
-                      Text(donor.address[0])
+                      Text(donor.address[0]),
+                      TextButton(
+                        onPressed: () {
+                          // Navigator.pop(context);
+                          context.read<UserAuthProvider>().signOut();
+                          // Navigator.push(context, MaterialPageRoute(builder: (context) => SignInPage()));
+                        }, 
+                        child: Text("Sign Out")
+                      )
 
                     ],
                   );
