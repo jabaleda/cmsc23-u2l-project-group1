@@ -14,6 +14,7 @@ import 'package:my_app/providers/usertype_provider.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/org_provider.dart';
+import 'package:file_picker/file_picker.dart';
 
 class SignUpOrg extends StatefulWidget {
   const SignUpOrg({super.key});
@@ -35,6 +36,7 @@ class _SignUpOrgState extends State<SignUpOrg> {
   String? contactNo;
   String? proof;
   String? about;
+  FilePickerResult? result;
   
   
   @override

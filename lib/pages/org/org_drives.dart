@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/models/donation_drive.dart';
+import 'package:my_app/pages/org/org_createDrive.dart';
 import 'package:my_app/providers/drive_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +15,7 @@ class OrganizationDrives extends StatefulWidget {
 
 class _OrganizationDrivesState extends State<OrganizationDrives> {
   @override
+
   Widget build(BuildContext context) {
     Stream<QuerySnapshot> driveStream = context.watch<DriveProvider>().drives;
     return Scaffold(
@@ -44,6 +46,7 @@ class _OrganizationDrivesState extends State<OrganizationDrives> {
           }
         return(
           ListView.builder(
+          shrinkWrap: true,
           itemCount: snapshot.data?.docs.length,
           itemBuilder: (context, index) {
             DonationDrive drive = DonationDrive.fromJson(
@@ -85,11 +88,16 @@ class _OrganizationDrivesState extends State<OrganizationDrives> {
           },
           )); 
         },
+
+        
         ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // CRUD for Donation Drives
-          Navigator.pushNamed(context, "/createDrive");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CreateDonationDrive(widget.email)),
+          );
         },
         child: Icon(Icons.add),
       ),

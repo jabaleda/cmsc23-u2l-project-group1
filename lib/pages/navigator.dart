@@ -5,8 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/pages/admin/admin_page.dart';
 import 'package:my_app/pages/donor/donor_home.dart';
+import 'package:my_app/pages/navigator2.dart';
 import 'package:my_app/pages/org/org_home.dart';
 import 'package:my_app/pages/signing/signin_page.dart';
+import 'package:my_app/providers/org_provider.dart';
 import 'package:my_app/providers/usertype_provider.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
@@ -83,7 +85,42 @@ class _HomePageState extends State<HomePage> {
                 if(snapshot.data == "donor"){
                   return DonorHome();
                 }else if(snapshot.data == "org"){
-                  return OrganizationHome(email);
+                  
+                //   return FutureBuilder(
+                //   // * future receives the user type
+                //   future: context.read<OrgProvider>().orgService.getOrgStatus(email), 
+                //   builder: (context, snapshot2) {
+                //     // if (snapshot2.hasError) {
+                //     //   return Scaffold(
+                //     //     body: Center(
+                //     //       child: Text("Error encountered! ${snapshot2.error}"),
+                //     //     ),
+                //     //   );
+                //     // } else if (snapshot2.connectionState == ConnectionState.waiting) {
+                //     //   return const Scaffold(
+                //     //     body: Center(
+                //     //       child: CircularProgressIndicator(),
+                //     //     ),
+                //     //   );
+                //     // } else if (!snapshot2.hasData) {
+                //     //   return const SignInPage();//if no org
+                //     // }
+                    
+                //     // Testing
+                //     // print("in new: $snapshot");
+                //     // print("in new: ${snapshot.data}");
+
+                //     if(snapshot2.data == true){
+                //       return OrganizationHome(email);
+                //     }else if(snapshot2.data == false){
+                      
+                //       return const SignInPage();
+                //     }else{
+                //       return const SignInPage();
+                //     }
+                //   }
+                // );
+                  return HomePage2(email);
                 }else{
                   return const SignInPage();
                 }
