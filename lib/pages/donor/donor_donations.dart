@@ -8,28 +8,21 @@ import '../../providers/donation_provider.dart';
 
 
 class DonorDonations extends StatefulWidget {
-  const DonorDonations({super.key});
+  final String donorEmail;
+  const DonorDonations(this.donorEmail, {super.key});
 
   @override
   State<DonorDonations> createState() => _DonorDonationsState();
 }
 
 class _DonorDonationsState extends State<DonorDonations> {
-  // Soon: Obtain organization list by Stream<QuerySnapshot>
-  // Soon: Modify listview.builder wrapped around StreamBuilder
-
-  // Possible Sample data using Provider
-  // List<Org> orgs = context.watch<OrgList>().olist;
-  // basic sample data (map)
-  var orgs = {0:"Donation 1", 1:"Donation 2", 2:"Donation 3"};
 
   @override
   Widget build(BuildContext context) {
 
-    // fetch
-    Stream<QuerySnapshot> donationListStream = context.watch<DonorDonationProvider>().donations;
+    // fetch donations specific to widget.donorEmail
+    Stream<QuerySnapshot> donationListStream = context.watch<DonorDonationProvider>().firebaseService.getTheseDonations(widget.donorEmail);
   
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Donations"),
@@ -74,7 +67,7 @@ class _DonorDonationsState extends State<DonorDonations> {
                       // display
                       return ListTile(
                         title: Text("Donation for ${donation.orgname}"),
-                        subtitle: Text(donation.donor),
+                        subtitle: Text(donation.category),
 
                         onTap: () {
                           // Donation detail screen

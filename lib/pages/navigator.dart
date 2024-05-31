@@ -83,43 +83,8 @@ class _HomePageState extends State<HomePage> {
                 // print("in new: ${snapshot.data}");
 
                 if(snapshot.data == "donor"){
-                  return DonorHome();
+                  return DonorHome(email);
                 }else if(snapshot.data == "org"){
-                  
-                //   return FutureBuilder(
-                //   // * future receives the user type
-                //   future: context.read<OrgProvider>().orgService.getOrgStatus(email), 
-                //   builder: (context, snapshot2) {
-                //     // if (snapshot2.hasError) {
-                //     //   return Scaffold(
-                //     //     body: Center(
-                //     //       child: Text("Error encountered! ${snapshot2.error}"),
-                //     //     ),
-                //     //   );
-                //     // } else if (snapshot2.connectionState == ConnectionState.waiting) {
-                //     //   return const Scaffold(
-                //     //     body: Center(
-                //     //       child: CircularProgressIndicator(),
-                //     //     ),
-                //     //   );
-                //     // } else if (!snapshot2.hasData) {
-                //     //   return const SignInPage();//if no org
-                //     // }
-                    
-                //     // Testing
-                //     // print("in new: $snapshot");
-                //     // print("in new: ${snapshot.data}");
-
-                //     if(snapshot2.data == true){
-                //       return OrganizationHome(email);
-                //     }else if(snapshot2.data == false){
-                      
-                //       return const SignInPage();
-                //     }else{
-                //       return const SignInPage();
-                //     }
-                //   }
-                // );
                   return HomePage2(email);
                 }else{
                   return const SignInPage();

@@ -18,7 +18,7 @@ class Organization {//for organization details
   bool statusApproved;
   String username;
   String? email;
-  String address;
+  // String address;
   String contactNo;
   String proof;
 
@@ -31,7 +31,7 @@ class Organization {//for organization details
     required this.statusApproved,
     required this.username,
     required this.email,
-    required this.address,
+    // required this.address,
     required this.contactNo,
     required this.proof
 
@@ -47,7 +47,7 @@ class Organization {//for organization details
       type: json['type'],
       username: json['username'],
       email: json['email'],
-      address: json['address'],
+      // address: json['address'],
       contactNo: json['contactNo'],
       proof: json['proof']
     );
@@ -67,7 +67,7 @@ class Organization {//for organization details
       'type': org.type,
       'username': org.username,
       'email': org.email,
-      'address': org.address,
+      // 'address': org.address,
       'contactNo': org.contactNo,
       'proof': org.proof
     };
