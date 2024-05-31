@@ -169,16 +169,22 @@ class _SignUpDonorState extends State<SignUpDonor> {
               .authService
               .signUp(email!, password!);
 
+            // * NEW
+            List<String> addrList = <String>[];
+            addrList.add(address!);
+
+            print(addrList);
+
             await context
               .read<DonorProvider>()
               .donorService
-              .addDonor(email!, name!, username!, address!, contactNo!);
+              .addDonor(email!, name!, username!, addrList, contactNo!);
 
-            // * NEW: add to new collection containing email and user type
+            // add to new collection containing email and user type
             await context
               .read<UsertypeProvider>()
               .addUser(email!, "donor");
-            // * NEW end ----------
+            
 
         if (mounted){
           Navigator.pop(context);

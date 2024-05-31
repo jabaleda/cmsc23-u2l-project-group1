@@ -31,7 +31,7 @@ class DonorProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void addDonor(String email, String name, String username, String address, String contactNo) async {
+  void addDonor(String email, String name, String username, List<String> address, String contactNo) async {
     // add to db
     String message = await donorService.addDonor(email, name, username, address, contactNo);
     print(message);

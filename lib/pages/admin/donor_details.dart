@@ -24,6 +24,7 @@ class _DonorDetailState extends State<DonorDetail> {//page for details of donor
           Text('Email: ${widget.donor.email!}'),
           Text('Address: ${widget.donor.address!}'),
           Text('Contact Number: ${widget.donor.contactNo!}')
+
         ],
       )
       )
