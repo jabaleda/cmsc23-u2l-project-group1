@@ -9,7 +9,7 @@ class DonorDetail extends StatefulWidget {
   State<DonorDetail> createState() => _DonorDetailState();
 }
 
-class _DonorDetailState extends State<DonorDetail> {
+class _DonorDetailState extends State<DonorDetail> {//page for details of donor
   @override
   Widget build(BuildContext context) {
     return Scaffold(

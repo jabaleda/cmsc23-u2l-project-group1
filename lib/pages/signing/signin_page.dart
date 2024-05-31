@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/pages/signing/signup_donor_page.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/org_provider.dart';
@@ -34,7 +35,7 @@ class _SignInPageState extends State<SignInPage> {
                   Spacer(),
                   // image
                   Spacer(flex: 3,),
-                  Text("App Name"),
+                  Container(color: Colors.deepOrange ,child: Text("ELBI-GAY")),
                   Spacer(flex: 2,),
                   heading,
                   Align(

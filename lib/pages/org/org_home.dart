@@ -89,6 +89,7 @@ class _DonationListState extends State<DonationList> {
   Widget build(BuildContext context) {
     Stream<QuerySnapshot> donoStream = context.watch<DonorDonationProvider>().donations;
     Stream<QuerySnapshot> driveStream = context.watch<DriveProvider>().drives;
+    final List<String> _statuses = ["Pending", "Confirmed", "Scheduled for Pick-up", "Complete", "Canceled"];
 
     return Scaffold(
       appBar: AppBar(
@@ -217,6 +218,20 @@ class _DonationListState extends State<DonationList> {
                                       "Date: ${dono.date}",
                                       style: TextStyle(fontSize: 20),
                                     ),
+                                    DropdownButtonFormField(
+                                    value: dono.status,
+                                    onChanged: (value) {
+                                      context.read<DonorDonationProvider>().editDonStat(dono.id!, value!);
+                                    },
+                                    items: _statuses.map((String status) {
+                                      return DropdownMenuItem<String>(
+                                        value: status,
+                                        child: Text(status)
+                                      );
+                                    }).toList(),
+                                  ),
+
+
                                   ],
                                 ),
                               );
