@@ -8,6 +8,12 @@ class FirebaseDonationAPI {
     return db.collection("donations").snapshots();
   }
 
+  // get donations specific to user
+  Stream<QuerySnapshot> getTheseDonations(String email) {
+    print('received: $email');
+    return db.collection("donations").where("donor", isEqualTo: email).snapshots();
+  }
+
   // add a donation
   Future<String> addDonation(Map<String, dynamic> donation) async {
     try {
@@ -28,4 +34,8 @@ class FirebaseDonationAPI {
       return "Error in ${e.code}: ${e.message}";
     }
   }
+
+  
+
+
 }

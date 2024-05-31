@@ -30,7 +30,8 @@ import 'form/weight.dart';
 
 class DonorDonate extends StatefulWidget {
   final Organization org;
-  const DonorDonate(this.org, {super.key});
+  final String donorEmail;
+  const DonorDonate(this.org, this.donorEmail, {super.key});
 
   @override
   State<DonorDonate> createState() => _DonorDonateState();
@@ -233,7 +234,7 @@ class _DonorDonateState extends State<DonorDonate> {
                       Donation newDonation = Donation(
                         org: widget.org.id!,
                         orgname: widget.org.name,
-                        donor: donorid,
+                        donor: widget.donorEmail,
                         category: category,
                         pickUp: isPickUp,
                         weight: weight,

@@ -18,7 +18,9 @@ class FirebaseOrgAPI {
   }
 
 
-  Future<String> addOrg(String email, String name, String username, String address, String contactNo, String about, String proof) async { //adding an org
+  Future<String> addOrg(String email, String name, String username, 
+                        // String address, 
+                        String contactNo, String about, String proof) async { //adding an org
     try {
       Organization org = Organization(//making object for db
               type: 'org',
@@ -26,7 +28,7 @@ class FirebaseOrgAPI {
               name: name,
               about: about,
               username: username,
-              address: address,
+              // address: address,
               contactNo: contactNo,
               statusApproved: false,
               statusDonation: false,

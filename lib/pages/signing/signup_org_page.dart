@@ -212,7 +212,9 @@ class _SignUpOrgState extends State<SignUpOrg> {
         await context
           .read<OrgProvider>()
           .orgService
-          .addOrg(email!, orgname!, username!, address!, contactNo!, about!, proof!);
+          .addOrg(email!, orgname!, username!, 
+                  // address!, 
+                  contactNo!, about!, proof!);
 
 
         await context

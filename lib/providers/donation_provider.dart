@@ -13,6 +13,8 @@ class DonorDonationProvider with ChangeNotifier {
   FirebaseDonationAPI firebaseService = FirebaseDonationAPI();
   // stream
   late Stream<QuerySnapshot> _donationStream;
+
+  // late Stream<QuerySnapshot> _uniqueDonorStream;
   
   // ignore: non_constant_identifier_names
   DonorDonationProvider() {
@@ -27,7 +29,6 @@ class DonorDonationProvider with ChangeNotifier {
     _donationStream = firebaseService.getAllDonations();
     notifyListeners();
   }
-
 
   void addDonation(Donation donation) async {
     // add by api

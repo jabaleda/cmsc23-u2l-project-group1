@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/models/organization.dart';
-import 'package:my_app/pages/donor/donor_donate.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/org_provider.dart';
 import 'org_details.dart';
 
 class DonorOrgList extends StatefulWidget {
-  const DonorOrgList({super.key});
+  final String donorEmail;
+  const DonorOrgList(this.donorEmail, {super.key});
 
   @override
   State<DonorOrgList> createState() => _DonorOrgListState();
@@ -72,7 +72,7 @@ class _DonorOrgListState extends State<DonorOrgList> {
                           // * NEW: Display Org Details first
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => OrgDetails(org))
+                            MaterialPageRoute(builder: (context) => OrgDetails(org, widget.donorEmail))
                           );
                         },
                       );

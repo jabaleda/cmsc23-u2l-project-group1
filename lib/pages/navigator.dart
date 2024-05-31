@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                 // print("in new: ${snapshot.data}");
 
                 if(snapshot.data == "donor"){
-                  return DonorHome();
+                  return DonorHome(email);
                 }else{
                   return OrganizationHome();
                 }

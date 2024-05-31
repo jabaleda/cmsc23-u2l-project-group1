@@ -7,19 +7,27 @@ import 'package:my_app/pages/donor/donor_orglist.dart';
 import 'package:my_app/pages/donor/donor_profile.dart';
 
 class DonorHome extends StatefulWidget {
-  const DonorHome({super.key});
+  final String email;
+  const DonorHome(this.email, {super.key});
 
   @override
   State<DonorHome> createState() => _DonorHomeState();
 }
 
 class _DonorHomeState extends State<DonorHome> {
-  // 
-  static List<Widget> _pages = <Widget>[
-    DonorOrgList(),
-    DonorDonations(),
-    DonorProfile(),
-  ];
+  late String email;
+  late List<Widget> _pages;
+
+  @override
+  void initState() {
+    super.initState();
+    email = widget.email;
+    _pages = <Widget>[
+      DonorOrgList(email),
+      DonorDonations(email),
+      DonorProfile(),
+    ];
+  }
 
   int _selectedIndex = 0;
 

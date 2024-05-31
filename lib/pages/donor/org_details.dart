@@ -9,7 +9,8 @@ import 'donor_donate.dart';
 
 class OrgDetails extends StatefulWidget {
   final Organization org;
-  const OrgDetails(this.org, {super.key});
+  final String donorEmail;
+  const OrgDetails(this.org, this.donorEmail, {super.key});
 
   @override
   State<OrgDetails> createState() => _OrgDetailsState();
@@ -28,7 +29,7 @@ class _OrgDetailsState extends State<OrgDetails> {
           children: [
             Text(widget.org.name),
             Text(widget.org.about),
-            Text(widget.org.address[0]),
+            // Text(widget.org.address[0]),
             Text(widget.org.contactNo),
 
             ElevatedButton(
@@ -38,7 +39,7 @@ class _OrgDetailsState extends State<OrgDetails> {
                 // ! NOTE: Needs a unique donor identifier (id, email, username)
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => DonorDonate(widget.org)),
+                  MaterialPageRoute(builder: (context) => DonorDonate(widget.org, widget.donorEmail)),
                 );
               }, 
               child: Text("Donate")
