@@ -22,18 +22,32 @@ class _ContactNoState extends State<ContactNo> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: _controller,
-      keyboardType: TextInputType.phone,
-      validator: (val) {
-        if(widget.isPickUp == true && (val==null || val.isEmpty)){
-          return "Invalid contact number!";
-        }
-        return null;
-      },
-      onChanged: (val) {
-        widget.callback(_controller.text);
-      },
-    );
+    return Container(
+      margin: EdgeInsets.only(top: 10, bottom: 10),
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      decoration: BoxDecoration(
+        color: Color.fromARGB(255, 239, 239, 239),
+        borderRadius: BorderRadius.circular(10),
+        
+      ),
+      child: TextFormField(
+        controller: _controller,
+        keyboardType: TextInputType.phone,
+        validator: (val) {
+          if(widget.isPickUp == true && (val==null || val.isEmpty)){
+            return "Invalid contact number!";
+          }
+          return null;
+        },
+        onChanged: (val) {
+          widget.callback(_controller.text);
+        },
+        decoration: InputDecoration(
+          label: Text("Contact No."),
+          enabledBorder: InputBorder.none,
+        ),
+      ),
+    )
+    ;
   }
 }

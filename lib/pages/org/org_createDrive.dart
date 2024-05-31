@@ -28,43 +28,43 @@ class _CreateDonationDriveState extends State<CreateDonationDrive> {
 
   FirebaseStorage storage = FirebaseStorage.instance;
 
-  Future<void> _upload(String inputSource) async {
-    final picker = ImagePicker();
-    XFile? pickedImage;
+  // Future<void> _upload(String inputSource) async {
+  //   final picker = ImagePicker();
+  //   XFile? pickedImage;
     
 
-    try {
-      pickedImage = await picker.pickImage(
-          source: inputSource == 'camera'
-              ? ImageSource.camera
-              : ImageSource.gallery,
-          maxWidth: 1920);
+  //   try {
+  //     pickedImage = await picker.pickImage(
+  //         source: inputSource == 'camera'
+  //             ? ImageSource.camera
+  //             : ImageSource.gallery,
+  //         maxWidth: 1920);
 
-      final String fileName = path.basename(pickedImage!.path);
-      File imageFile = File(pickedImage.path);
+  //     final String fileName = path.basename(pickedImage!.path);
+  //     File imageFile = File(pickedImage.path);
 
-      try {
-        // Uploading the selected image with some custom meta data
-        await storage.ref(fileName).putFile(
-            imageFile,
-            SettableMetadata(customMetadata: {
-              'uploaded_by': widget.email,
-              'description': 'Some description...'
-            }));
+  //     try {
+  //       // Uploading the selected image with some custom meta data
+  //       await storage.ref(fileName).putFile(
+  //           imageFile,
+  //           SettableMetadata(customMetadata: {
+  //             'uploaded_by': widget.email,
+  //             'description': 'Some description...'
+  //           }));
 
-        // Refresh the UI
-        setState(() {});
-      } on FirebaseException catch (error) {
-        if (kDebugMode) {
-          print(error);
-        }
-      }
-    } catch (err) {
-      if (kDebugMode) {
-        print(err);
-      }
-    }
-  }
+  //       // Refresh the UI
+  //       setState(() {});
+  //     } on FirebaseException catch (error) {
+  //       if (kDebugMode) {
+  //         print(error);
+  //       }
+  //     }
+  //   } catch (err) {
+  //     if (kDebugMode) {
+  //       print(err);
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -127,32 +127,6 @@ class _CreateDonationDriveState extends State<CreateDonationDrive> {
                     Navigator.pop(context);
                   }
                 },
-                child: Text("CREATE"),
-              )),
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromRGBO(248, 120, 8, 100),
-                    foregroundColor: Colors.white,
-                    minimumSize: Size(150, 33),
-                    textStyle: TextStyle(
-                      fontSize: 16
-                    )
-                ),
-                    onPressed: () => _upload('camera'),
-                    icon: const Icon(Icons.camera),
-                    label: const Text('CAMERA')),
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromRGBO(248, 120, 8, 100),
-                    foregroundColor: Colors.white,
-                    minimumSize: Size(150, 33),
-                    textStyle: TextStyle(
-                      fontSize: 16
-                    )
-                ),
-                    onPressed: () => _upload('gallery'),
-                    icon: const Icon(Icons.library_add),
-                    label: const Text('GALLERY')),      
             ],
           ),
         ),
