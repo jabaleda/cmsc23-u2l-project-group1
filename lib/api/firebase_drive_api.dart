@@ -26,4 +26,15 @@ class FirebaseDriveAPI {
     }
   }
 
+  Future<String> addDonation(String id, String driveId) async {
+    try {
+      await db.collection("donationDrives").doc(driveId).update({
+        "donations": FieldValue.arrayUnion([id])
+      });
+      return "Added to org donations";
+    } on FirebaseException catch (e) {
+      return "Error in ${e.code}: ${e.message}";
+    }
+  }
+
 }
