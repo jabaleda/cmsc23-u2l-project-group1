@@ -54,6 +54,7 @@ class _OrganizationHomeState extends State<OrganizationHome> {
     return Scaffold(
       body: pages[currIndex],
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Color.fromRGBO(248, 120, 8, 100),
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.home_rounded),

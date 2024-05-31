@@ -93,10 +93,20 @@ class _OrganizationProfileState extends State<OrganizationProfile> {
                   SwitchListTile(
                     title: Text("Status for Donation"),
                     value: org.statusDonation,
+                    activeTrackColor: Color.fromRGBO(248, 120, 8, 100),
                     onChanged: (bool val) async {
                       context.read<OrgProvider>().toggleDonation(snapshot.data!.docs[0].id, val);
                     },
                   ),
+                  Divider(),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(248, 120, 8, 100),
+                      foregroundColor: Colors.white,
+                    ),
+                    onPressed: () { context.read<UserAuthProvider>().signOut(); },
+                    child: Text("Sign out")
+                  )
                 ],
               )
             );
