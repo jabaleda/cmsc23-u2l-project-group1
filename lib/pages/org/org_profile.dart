@@ -55,7 +55,10 @@ class _OrganizationProfileState extends State<OrganizationProfile> {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.account_circle, size: 24,),
+                      Padding(
+                        padding: EdgeInsets.only(left: 50, right: 50),
+                        child: Icon(Icons.account_circle, size: 64,),
+                      ),
                       Text(
                         org.name,
                         style: TextStyle(
@@ -69,14 +72,20 @@ class _OrganizationProfileState extends State<OrganizationProfile> {
                   ),
                   Row(
                     children: [
-                      Icon(Icons.edit, size: 24,),
-                      Text(
-                        org.about,
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold
-                        ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 50, right: 50),
+                        child: Icon(Icons.edit, size: 24,),
                       ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width-124,
+                        child: 
+                        Text(
+                          org.about,
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   Divider(
