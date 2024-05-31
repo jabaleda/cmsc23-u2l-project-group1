@@ -90,6 +90,7 @@ class _DonationListState extends State<DonationList> {
   Widget build(BuildContext context) {
     Stream<QuerySnapshot> donoStream = context.watch<DonorDonationProvider>().donations;
     Stream<QuerySnapshot> driveStream = context.watch<DriveProvider>().drives;
+    final List<String> _statuses = ["Pending", "Confirmed", "Scheduled for Pick-up", "Complete", "Canceled"];
 
     return Scaffold(
       appBar: AppBar(
@@ -127,10 +128,11 @@ class _DonationListState extends State<DonationList> {
                     snapshot.data?.docs[index].data() as Map<String, dynamic>
                   );
                   String donoId = snapshot.data!.docs[index].id;
+                  String statusdono = dono.status;
                   if(dono.org == widget.email){
                     return ListTile(
                       title: Text(dono.donor),
-                      subtitle: Text(dono.status),
+                      subtitle: Text(statusdono),
                       trailing: IconButton(
                         onPressed: () {
                           showDialog(
@@ -218,6 +220,24 @@ class _DonationListState extends State<DonationList> {
                                       "Date: ${dono.date}",
                                       style: TextStyle(fontSize: 20),
                                     ),
+                                    DropdownButtonFormField(
+                                    value: statusdono,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        if(value != '' )
+                                        {
+                                          statusdono = value!;
+                                          context.read<DonorDonationProvider>().editDonStat(dono.id!, statusdono);
+                                        }
+                                      });
+                                    },
+                                    items: _statuses.map((String status) {
+                                      return DropdownMenuItem<String>(
+                                        value: status,
+                                        child: Text(status)
+                                      );
+                                    }).toList(),
+                                  ),
                                   ],
                                 ),
                               );
