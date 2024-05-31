@@ -75,10 +75,13 @@ class _CreateDonationDriveState extends State<CreateDonationDrive> {
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
-          child: Column(
+          child: Center(child:Column(
             children: [
-              TextFormField(
+              SizedBox(
+                width: 300,
+                child: Padding(padding: EdgeInsets.only(top: 20), child:TextFormField(
                 decoration: InputDecoration(
+                  border: OutlineInputBorder(),
                   label: Text("Name")
                 ),
                 onSaved: (val) {
@@ -89,9 +92,12 @@ class _CreateDonationDriveState extends State<CreateDonationDrive> {
                     name = value;
                   });
                 },
-              ),
-              TextFormField(
+              ))),
+              SizedBox(
+                width: 300,
+                child: Padding(padding: EdgeInsets.only(top: 20), child:TextFormField(
                 decoration: InputDecoration(
+                  border: OutlineInputBorder(),
                   label: Text("Description")
                 ),
                 onSaved: (val) {
@@ -102,8 +108,16 @@ class _CreateDonationDriveState extends State<CreateDonationDrive> {
                     desc = value;
                   });
                 },
-              ),
-              ElevatedButton(
+              ))),
+              Padding(padding: EdgeInsets.only(top: 20, bottom: 20), child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(248, 120, 8, 100),
+                    foregroundColor: Colors.white,
+                    minimumSize: Size(150, 33),
+                    textStyle: TextStyle(
+                      fontSize: 16
+                    )
+                ),
                 onPressed: () async {
                   if(_formKey.currentState!.validate()){
                     _formKey.currentState!.save();
@@ -113,20 +127,36 @@ class _CreateDonationDriveState extends State<CreateDonationDrive> {
                     Navigator.pop(context);
                   }
                 },
-                child: Text("Create"),
-              ),
+                child: Text("CREATE"),
+              )),
               ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(248, 120, 8, 100),
+                    foregroundColor: Colors.white,
+                    minimumSize: Size(150, 33),
+                    textStyle: TextStyle(
+                      fontSize: 16
+                    )
+                ),
                     onPressed: () => _upload('camera'),
                     icon: const Icon(Icons.camera),
-                    label: const Text('camera')),
+                    label: const Text('CAMERA')),
               ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(248, 120, 8, 100),
+                    foregroundColor: Colors.white,
+                    minimumSize: Size(150, 33),
+                    textStyle: TextStyle(
+                      fontSize: 16
+                    )
+                ),
                     onPressed: () => _upload('gallery'),
                     icon: const Icon(Icons.library_add),
-                    label: const Text('Gallery')),      
+                    label: const Text('GALLERY')),      
             ],
           ),
         ),
       ),
-    );
+    ));
   }
 }
