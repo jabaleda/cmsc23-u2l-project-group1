@@ -22,7 +22,7 @@ class _AdminPageState extends State<AdminPage> {
     return Scaffold(
       drawer: drawer,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Colors.deepOrange,
         title: const Text("Admin Page"),
       ),
       body: Center(
