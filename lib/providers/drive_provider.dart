@@ -26,4 +26,10 @@ class DriveProvider with ChangeNotifier {
     print(message);
     notifyListeners();
   }
+
+  void addDono(String id, String driveId) async {
+    String message = await driveService.addDonation(id, driveId);
+    print(message);
+    notifyListeners();
+  }
 }

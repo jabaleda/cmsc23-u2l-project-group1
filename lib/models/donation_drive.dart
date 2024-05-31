@@ -6,11 +6,13 @@ import 'package:my_app/models/donation.dart';
 class DonationDrive {
   String? name;
   String? desc;
+  String? org;
   List<dynamic>? donations;
 
   DonationDrive({
     this.name,
     this.desc,
+    this.org,
     this.donations,
   });
 
@@ -18,6 +20,7 @@ class DonationDrive {
     return DonationDrive(
       name: json['name'],
       desc: json['desc'],
+      org: json['org'],
       donations: json['donations'],
     );
   }
@@ -31,6 +34,7 @@ class DonationDrive {
     return {
       'name': drive.name,
       'desc': drive.desc,
+      'org': drive.org,
       'donations': drive.donations,
     };
   }

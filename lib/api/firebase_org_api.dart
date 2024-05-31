@@ -17,6 +17,21 @@ class FirebaseOrgAPI {
     return db.collection("organizations").where("statusDonation", isEqualTo: true).snapshots();
   }
 
+  Future<String> getOrgStatus(String email) async {
+    try {
+      print("getting this org reached.");
+      dynamic type = await db.collection("organizations").where("email", isEqualTo: email).get().then((QuerySnapshot querysnap) {
+        var doc = querysnap.docs[0].data();
+        Organization org = Organization.fromJson(doc as Map<String, dynamic>);
+        return org.statusApproved.toString();
+      });
+      return type;
+      // return type;
+    } on FirebaseException catch (e) {
+      return "Error in ${e.code}: ${e.message}";
+    }
+  }
+
 
   Future<String> addOrg(String email, String name, String username, 
                         // String address, 

@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:my_app/models/donation.dart';
 import 'package:my_app/providers/drive_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart' as path;
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 
 class CreateDonationDrive extends StatefulWidget {
-  const CreateDonationDrive({super.key});
+  const CreateDonationDrive(this.email, {super.key});
+  final String email;
 
   @override
   State<CreateDonationDrive> createState() => _CreateDonationDriveState();
@@ -18,6 +25,45 @@ class _CreateDonationDriveState extends State<CreateDonationDrive> {
   String? name;
   String? desc;
   List<Donation>? donations = [];
+
+  FirebaseStorage storage = FirebaseStorage.instance;
+
+  // Future<void> _upload(String inputSource) async {
+  //   final picker = ImagePicker();
+  //   XFile? pickedImage;
+    
+
+  //   try {
+  //     pickedImage = await picker.pickImage(
+  //         source: inputSource == 'camera'
+  //             ? ImageSource.camera
+  //             : ImageSource.gallery,
+  //         maxWidth: 1920);
+
+  //     final String fileName = path.basename(pickedImage!.path);
+  //     File imageFile = File(pickedImage.path);
+
+  //     try {
+  //       
+  //       await storage.ref(fileName).putFile(
+  //           imageFile,
+  //           SettableMetadata(customMetadata: {
+  //             'uploaded_by': widget.email,
+  //             'description': 'Description'
+  //           }));
+  //    
+  //       setState(() {});
+  //     } on FirebaseException catch (error) {
+  //       if (kDebugMode) {
+  //         print(error);
+  //       }
+  //     }
+  //   } catch (err) {
+  //     if (kDebugMode) {
+  //       print(err);
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +113,16 @@ class _CreateDonationDriveState extends State<CreateDonationDrive> {
                   }
                 },
                 child: Text("Create"),
-              )
+              ),
+              // ElevatedButton.icon(
+              //       onPressed: () => _upload('camera'),
+              //       icon: const Icon(Icons.camera),
+              //       label: const Text('camera')),
+              
+              // ElevatedButton.icon(
+              //       onPressed: () => _upload('gallery'),
+              //       icon: const Icon(Icons.library_add),
+              //       label: const Text('Gallery')),      
             ],
           ),
         ),

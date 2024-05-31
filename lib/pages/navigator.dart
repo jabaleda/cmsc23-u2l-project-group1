@@ -5,8 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/pages/admin/admin_page.dart';
 import 'package:my_app/pages/donor/donor_home.dart';
+import 'package:my_app/pages/navigator2.dart';
 import 'package:my_app/pages/org/org_home.dart';
 import 'package:my_app/pages/signing/signin_page.dart';
+import 'package:my_app/providers/org_provider.dart';
 import 'package:my_app/providers/usertype_provider.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
@@ -82,13 +84,14 @@ class _HomePageState extends State<HomePage> {
 
                 if(snapshot.data == "donor"){
                   return DonorHome(email);
-                }else if (snapshot.data == "org"){
-                  return OrganizationHome();
-                } else {
-                  return SignInPage();
+                }else if(snapshot.data == "org"){
+                  return HomePage2(email);
+                }else{
+                  return const SignInPage();
                 }
               }
             );
+            return const SignInPage();
           }
           // * NEW end ---------
 

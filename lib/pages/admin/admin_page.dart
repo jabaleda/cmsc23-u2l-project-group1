@@ -14,7 +14,7 @@ class AdminPage extends StatefulWidget {
   State<AdminPage> createState() => _AdminPageState();
 }
 
-class _AdminPageState extends State<AdminPage> {
+class _AdminPageState extends State<AdminPage> {//home page
   
   @override
   Widget build(BuildContext context) {
@@ -22,15 +22,17 @@ class _AdminPageState extends State<AdminPage> {
     return Scaffold(
       drawer: drawer,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Colors.deepOrange,
         title: const Text("Admin Page"),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ViewOrg, ApproveOrg, ViewDonor
-          ],
+      body: Container(color: Colors.orangeAccent,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              ViewOrg, ApproveOrg, ViewDonor //three button views
+            ],
+          ),
         ),
       ),
     );

@@ -29,7 +29,7 @@ class FirebaseDonationAPI {
     try {
       await db.collection("donations").doc(id)
         .update({"status": status});
-        return "Successfully cancelled!";
+        return "Successfully updated!";
     } on FirebaseException catch (e) {
       return "Error in ${e.code}: ${e.message}";
     }

@@ -1,4 +1,6 @@
 
+
+
 import 'package:flutter/material.dart';
 import 'package:my_app/pages/admin/donor_details.dart';
 import 'package:my_app/pages/admin/view_donation.dart';
@@ -65,19 +67,21 @@ class _ViewDonorState extends State<ViewDonors> {
                       donor.id = snapshot.data?.docs[index].id;
 
                       // * display
-                      return ListTile(
-                        title: Text("${donor.name}"),
-                        subtitle: Text("View details"),
-                        trailing: IconButton(
-                          onPressed: null, 
-                          icon: const Icon(Icons.delete_outlined)),
-                        onTap: () {
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => DonorDetail(donor)),
-                          );
-                        },
+                      return ClipRRect(borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(32),
+                          bottomLeft: Radius.circular(32),
+                        ),
+                        child: ListTile(
+                          title: Text("${donor.name}"),
+                          subtitle: Text("View details"),
+                          onTap: () {
+                            
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => DonorDetail(donor)),
+                            );
+                          },
+                        ),
                       );
                     })
                   );

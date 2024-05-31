@@ -9,7 +9,7 @@ class DonorDetail extends StatefulWidget {
   State<DonorDetail> createState() => _DonorDetailState();
 }
 
-class _DonorDetailState extends State<DonorDetail> {
+class _DonorDetailState extends State<DonorDetail> {//page for details of donor
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,11 +19,12 @@ class _DonorDetailState extends State<DonorDetail> {
       body: Center(child:
       Column(
         children: [
-          Text(widget.donor.name!),
-          Text(widget.donor.username!),
-          Text(widget.donor.email!),
-          // Text(widget.donor.address!),
-          Text(widget.donor.contactNo!)
+          Text('Name: ${widget.donor.name!}'),
+          Text('Username: ${widget.donor.username!}'),
+          Text('Email: ${widget.donor.email!}'),
+          Text('Address: ${widget.donor.address!}'),
+          Text('Contact Number: ${widget.donor.contactNo!}')
+
         ],
       )
       )

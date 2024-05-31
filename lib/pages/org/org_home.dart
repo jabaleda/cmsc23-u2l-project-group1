@@ -1,22 +1,37 @@
 // Organization Home Page
 // Display list of donations
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app/models/donation.dart';
+import 'package:my_app/models/donation_drive.dart';
 import 'package:my_app/pages/org/org_drives.dart';
 import 'package:my_app/pages/org/org_profile.dart';
+import 'package:my_app/providers/auth_provider.dart';
+import 'package:my_app/providers/donation_provider.dart';
+import 'package:my_app/providers/drive_provider.dart';
+import 'package:provider/provider.dart';
 
 class OrganizationHome extends StatefulWidget {
-  const OrganizationHome({super.key});
+  const OrganizationHome(this.email, {super.key});
+  final String email;
 
   @override
   State<OrganizationHome> createState() => _OrganizationHomeState();
 }
 
 class _OrganizationHomeState extends State<OrganizationHome> {
-  static List<Widget> pages = <Widget>[
-    DonationList(),
-    OrganizationDrives(),
-    OrganizationProfile(),
-  ];
+  late String getEmail;
+
+  // @override
+  //     void initState() {
+  //     super.initState();
+  //     getEmail = widget.email;
+  //   }
+  
+
+  static List<Widget> pages = <Widget>[];
 
   int currIndex = 0;
 
@@ -27,6 +42,14 @@ class _OrganizationHomeState extends State<OrganizationHome> {
   }
 
   @override
+  void initState() {
+      super.initState();
+      pages = <Widget>[
+      DonationList(widget.email),
+      OrganizationDrives(widget.email),
+      OrganizationProfile(),
+      ];
+    }
   Widget build(BuildContext context) {
     return Scaffold(
       body: pages[currIndex],
@@ -53,7 +76,8 @@ class _OrganizationHomeState extends State<OrganizationHome> {
 }
 
 class DonationList extends StatefulWidget {
-  const DonationList({super.key});
+  final String email;
+  const DonationList(this.email, {super.key});
 
   @override
   State<DonationList> createState() => _DonationListState();
@@ -63,60 +87,165 @@ class _DonationListState extends State<DonationList> {
 
   @override
   Widget build(BuildContext context) {
+    Stream<QuerySnapshot> donoStream = context.watch<DonorDonationProvider>().donations;
+    Stream<QuerySnapshot> driveStream = context.watch<DriveProvider>().drives;
+    final List<String> _statuses = ["Pending", "Confirmed", "Scheduled for Pick-up", "Complete", "Canceled"];
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Home"),
         automaticallyImplyLeading: false,
       ),
       body: 
-        ListView.builder(
-          itemCount: 1,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text("McDonalds"),
-              subtitle: Text("Pending"),
-              trailing: IconButton(
-                onPressed: () {
-                },
-                icon: Icon(Icons.more_horiz),
-              ),
-              onTap: () {
-                showModalBottomSheet(
-                    context: context,
-                    builder: (_) {
-                      return Container(
-                        height: 500,
-                        width: MediaQuery.of(context).size.width,
-                        child: Column(
-                          children: [
-                            Text(
-                              "Donation Type: Food",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              "Pickup",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              "Weight(kg): 100",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              "Date: 05/21/2024",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              "Time: 4:00pm",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ],
-                        ),
-                      );
-                    });
-              },
+        StreamBuilder(
+          stream: donoStream,
+          builder: (context, snapshot) {
+             if(snapshot.hasError) {
+              return Center(child: Text("Error! ${snapshot.error}"),);
+            }
+            else if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            else if(!snapshot.hasData) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Donations are empty")
+                  ],
+                ),
+              );
+            }
+
+            return (
+              ListView.builder(
+                itemCount: snapshot.data?.docs.length,
+                itemBuilder: (context, index) {
+                  Donation dono = Donation.fromJson(
+                    snapshot.data?.docs[index].data() as Map<String, dynamic>
+                  );
+                  String donoId = snapshot.data!.docs[index].id;
+                  if(dono.org == widget.email){
+                    return ListTile(
+                      title: Text(dono.donor),
+                      subtitle: Text(dono.status),
+                      trailing: IconButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context, 
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text("Select Donation Drive"),
+                                content: Container(
+                                  height: 300,
+                                  width: 300,
+                                  child:
+                                  StreamBuilder(
+                                  stream: driveStream,
+                                  builder: (context, snapshot){
+                                      if (snapshot.hasError) {
+                                        return Center(
+                                          child: Text(
+                                              "Error! ${snapshot.error}"),
+                                        );
+                                      } else if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return Center(
+                                          child:
+                                              CircularProgressIndicator(),
+                                        );
+                                      } else if (!snapshot.hasData) {
+                                        return Center(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text("Donations are empty")
+                                            ],
+                                          ),
+                                        );
+                                      }
+
+                                      return (
+                                        ListView.builder(
+                                          itemCount: snapshot.data?.docs.length,
+                                          itemBuilder: (context, index){
+                                            DonationDrive drive = DonationDrive.fromJson(
+                                              snapshot.data?.docs[index].data() as Map<String, dynamic>
+                                            );
+                                            return (
+                                              ListTile(
+                                                title: Text(drive.name!),
+                                                onTap: () async {
+                                                  await context.read<DriveProvider>().driveService.addDonation(donoId, snapshot.data!.docs[index].id);
+                                                },
+                                              )
+                                            );
+                                          },
+                                        )
+                                      );
+                                  })
+                              ));
+                            }
+                          );
+                        },
+                        icon: Icon(Icons.more_horiz),
+                      ),
+                      onTap: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (_) {
+                              return Container(
+                                height: 500,
+                                width: MediaQuery.of(context).size.width,
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Donation Type: ${dono.category}",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    Text(
+                                      dono.pickUp ? "Pickup" : "Drop-off",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    Text(
+                                      "Weight(${dono.unit}): ${dono.weight}",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    Text(
+                                      "Date: ${dono.date}",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    DropdownButtonFormField(
+                                    value: dono.status,
+                                    onChanged: (value) {
+                                      context.read<DonorDonationProvider>().editDonStat(dono.id!, value!);
+                                    },
+                                    items: _statuses.map((String status) {
+                                      return DropdownMenuItem<String>(
+                                        value: status,
+                                        child: Text(status)
+                                      );
+                                    }).toList(),
+                                  ),
+
+
+                                  ],
+                                ),
+                              );
+                            });
+                      },
+                    );
+                  }
+                  else {
+                    return Container();
+                  }
+                })
             );
-          }
-        ),
+          },
+        )
     );
   }
 }
