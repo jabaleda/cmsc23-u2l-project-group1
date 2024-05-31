@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/models/donation_drive.dart';
+import 'package:my_app/pages/org/org_createDrive.dart';
 import 'package:my_app/providers/drive_provider.dart';
 import 'package:provider/provider.dart';
 
 class OrganizationDrives extends StatefulWidget {
-  const OrganizationDrives({super.key});
+  const OrganizationDrives(this.email, {super.key});
+  final String email;
 
   @override
   State<OrganizationDrives> createState() => _OrganizationDrivesState();
@@ -13,6 +15,7 @@ class OrganizationDrives extends StatefulWidget {
 
 class _OrganizationDrivesState extends State<OrganizationDrives> {
   @override
+
   Widget build(BuildContext context) {
     Stream<QuerySnapshot> driveStream = context.watch<DriveProvider>().drives;
     return Scaffold(
@@ -43,12 +46,16 @@ class _OrganizationDrivesState extends State<OrganizationDrives> {
           }
         return(
           ListView.builder(
+          shrinkWrap: true,
           itemCount: snapshot.data?.docs.length,
           itemBuilder: (context, index) {
             DonationDrive drive = DonationDrive.fromJson(
               snapshot.data?.docs[index].data() as Map<String, dynamic>
             );
-            return ListTile(
+
+            if(widget.email == drive.org)
+            {
+              return ListTile(
               title: Text(drive.name!),
               trailing: IconButton(
                 onPressed: () {
@@ -72,14 +79,25 @@ class _OrganizationDrivesState extends State<OrganizationDrives> {
                 });
               },
             );
+            }
+            else{
+              return(
+                Container()
+              );
+            }
           },
           )); 
         },
+
+        
         ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // CRUD for Donation Drives
-          Navigator.pushNamed(context, "/createDrive");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CreateDonationDrive(widget.email)),
+          );
         },
         child: Icon(Icons.add),
       ),
