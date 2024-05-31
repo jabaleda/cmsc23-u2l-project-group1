@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/pages/admin/view_donation.dart';
 import '../../models/organization.dart'; 
+import 'package:provider/provider.dart';
+import '../../providers/org_provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class OrgApproval extends StatefulWidget {
@@ -11,33 +15,71 @@ class OrgApproval extends StatefulWidget {
 
 class _OrgApprovalState extends State<OrgApproval> {
 
-  var orgs = {0:"YSES", 1:"COSS", 2:"ACSS", 3:"MASS"};
-  bool? value = false;
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+
+    Stream<QuerySnapshot> orgStream = context.watch<OrgProvider>().orgs;
+
+      return Scaffold(
       appBar: AppBar(
-        title: Text("Organizations for approval"),
+        leading: BackButton(),
+        title: Text("Organization Approval")
       ),
       body: Column(
         children: [
-          Flexible(
-            child: ListView.builder(
-              itemCount: orgs.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  title: Text(orgs[index]!),
-                  trailing: Checkbox(
-                    value: value,
-                    onChanged: (bool? newvalue) {
-                      setState(() {
-                        value = newvalue;
-                      });
-                    },
-                  ),
-                );
-              }
+          Expanded(
+            child: Container(
+              child: StreamBuilder(
+                stream: orgStream,
+                builder: (context, snapshot) {
+                  // * check if empty
+                  if(snapshot.data?.size == 0) {
+                    return Center(child: Text("No data :("));
+                  } else {
+                    if (snapshot.hasError) {
+                      print("There's an error.");
+                      return Center(
+                        child: Text("Error encountered! ${snapshot.error}"),
+                      );
+                    } else if(snapshot.connectionState == ConnectionState.waiting) {
+                      print(snapshot.connectionState);
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  }
+
+
+                  // * return org list display
+                  return ListView.builder(
+                    itemCount: snapshot.data?.docs.length,
+                    itemBuilder: ( (context, index) {
+                      // * Org Object
+                      Organization org = Organization.fromJson(
+                        snapshot.data?.docs[index].data() as Map<String, dynamic>
+                      );
+
+                      // * set id
+                      org.id = snapshot.data?.docs[index].id;
+
+                      // * display
+                      return ListTile(
+                        title: Text("${org.name}"),
+                        subtitle: Text("Grant access?"),
+                        trailing: Checkbox(
+                          value: org.statusApproved,
+                          onChanged: (bool? value) {
+                            context
+                              .read<OrgProvider>()
+                              .toggleStatus(org.id!, value!);
+                          }
+                         ),
+                      );
+                    })
+                  );
+
+                },
+              ),
             ),
           )
         ],

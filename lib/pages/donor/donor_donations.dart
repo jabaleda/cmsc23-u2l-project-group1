@@ -73,7 +73,7 @@ class _DonorDonationsState extends State<DonorDonations> {
 
                       // display
                       return ListTile(
-                        title: Text("For ${donation.org}"),
+                        title: Text("Donation for ${donation.orgname}"),
                         subtitle: Text(donation.donor),
 
                         onTap: () {

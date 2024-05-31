@@ -12,6 +12,8 @@
 */
 
 import 'package:flutter/material.dart';
+import '../../providers/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class DonorProfile extends StatefulWidget {
   const DonorProfile({super.key});
@@ -41,7 +43,9 @@ class _DonorProfileState extends State<DonorProfile> {
             Text("Info"),
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                // Navigator.pop(context);
+                context.read<UserAuthProvider>().signOut();
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => SignInPage()));
               }, 
               child: Text("Sign Out")
             )

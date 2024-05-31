@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../api/firebase_auth_api.dart';
-import '../api/firebase_donor_api.dart';
 
 
 class UserAuthProvider with ChangeNotifier {
@@ -21,6 +20,10 @@ class UserAuthProvider with ChangeNotifier {
   void fetchAuthentication() {
     _uStream = authService.getSignedIn();
     notifyListeners();
+  }
+
+  Future<bool> getType(String? email) async {
+    return authService.getEmailOrg(email!);
   }
 
   Future<void> signUp(String email, String password) async {

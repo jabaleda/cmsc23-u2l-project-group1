@@ -17,8 +17,8 @@ class Organization {//for organization details
   bool statusDonation;
   bool statusApproved;
   String username;
-  String email;
-  List<String> address;
+  String? email;
+  String address;
   String contactNo;
   String proof;
 
@@ -47,7 +47,7 @@ class Organization {//for organization details
       type: json['type'],
       username: json['username'],
       email: json['email'],
-      address: List.from(json['address']),
+      address: json['address'],
       contactNo: json['contactNo'],
       proof: json['proof']
     );

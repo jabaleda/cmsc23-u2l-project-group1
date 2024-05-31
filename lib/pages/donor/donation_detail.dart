@@ -15,16 +15,17 @@ class _DonationDetailState extends State<DDonationDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Different text"),
+        title: Text("Donation details"),
       ),
-      body: Column(
-        children: [
-          Text(widget.donation.category),
-          Text(widget.donation.weight),
-          Text(widget.donation.unit),
-          Text(widget.donation.pickUp.toString()),
-          Text(widget.donation.status)
-        ],
+      body: Center(
+        child: Column(
+          children: [
+            Text(widget.donation.category),
+            Text("${widget.donation.weight} ${widget.donation.unit}"),
+            Text(widget.donation.pickUp.toString()),
+            Text(widget.donation.status)
+          ],
+        ),
       )
     );
   }

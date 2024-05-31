@@ -18,7 +18,7 @@ class FirebaseOrgAPI {
   }
 
 
-  Future<String> addOrg(String email, String name, String username, List<String> address, String contactNo, String about, String proof) async { //adding an org
+  Future<String> addOrg(String email, String name, String username, String address, String contactNo, String about, String proof) async { //adding an org
     try {
       Organization org = Organization(//making object for db
               type: 'org',
@@ -37,6 +37,16 @@ class FirebaseOrgAPI {
       await db.collection("organizations").add(neworg);
       return "Successfully added!";
 
+    } on FirebaseException catch (e) {
+      return "Error in ${e.code}: ${e.message}";
+    }
+  }
+
+  Future<String> toggleStatus(String id, bool status) async {
+    try {
+      await db.collection("organizations").doc(id).update({"statusApproved": status});
+
+      return "Successfully toggled!";
     } on FirebaseException catch (e) {
       return "Error in ${e.code}: ${e.message}";
     }

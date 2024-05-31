@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseAuthAPI {
-
+  static final FirebaseFirestore db = FirebaseFirestore.instance;
   static final FirebaseAuth auth = FirebaseAuth.instance;
 
   User? getUser(){
@@ -11,6 +12,10 @@ class FirebaseAuthAPI {
 
   Stream<User?> getSignedIn() {
     return auth.authStateChanges();
+  }
+
+  Future<bool> getEmailOrg(String? email) {
+    return db.collection("organizations").where("email", isEqualTo: email!).snapshots().isEmpty;
   }
 
   Future<String?> signIn(String email, String password, BuildContext context) async {
