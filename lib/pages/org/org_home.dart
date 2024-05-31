@@ -1,12 +1,13 @@
 // Organization Home Page
 // Display list of donations
-import 'dart:js_interop';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/models/donation.dart';
 import 'package:my_app/pages/org/org_drives.dart';
 import 'package:my_app/pages/org/org_profile.dart';
+import 'package:my_app/providers/auth_provider.dart';
 import 'package:my_app/providers/donation_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -42,7 +43,7 @@ class _OrganizationHomeState extends State<OrganizationHome> {
   void initState() {
       super.initState();
       pages = <Widget>[
-      DonationList(),
+      DonationList(widget.email),
       OrganizationDrives(widget.email),
       OrganizationProfile(),
       ];
@@ -73,7 +74,8 @@ class _OrganizationHomeState extends State<OrganizationHome> {
 }
 
 class DonationList extends StatefulWidget {
-  const DonationList({super.key});
+  final String email;
+  const DonationList(this.email, {super.key});
 
   @override
   State<DonationList> createState() => _DonationListState();
@@ -84,6 +86,7 @@ class _DonationListState extends State<DonationList> {
   @override
   Widget build(BuildContext context) {
     Stream<QuerySnapshot> donoStream = context.watch<DonorDonationProvider>().donations;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Home"),
@@ -112,8 +115,6 @@ class _DonationListState extends State<DonationList> {
               );
             }
 
-            String org = snapshot.data?.org;
-
             return (
               ListView.builder(
                 itemCount: snapshot.data?.docs.length,
@@ -121,48 +122,51 @@ class _DonationListState extends State<DonationList> {
                   Donation dono = Donation.fromJson(
                     snapshot.data?.docs[index].data() as Map<String, dynamic>
                   );
-                  return ListTile(
-                    title: Text(dono.donor),
-                    subtitle: Text(dono.status),
-                    trailing: IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.more_horiz),
-                    ),
-                    onTap: () {
-                      showModalBottomSheet(
-                          context: context,
-                          builder: (_) {
-                            return Container(
-                              height: 500,
-                              width: MediaQuery.of(context).size.width,
-                              child: Column(
-                                children: [
-                                  Text(
-                                    "Donation Type: Food",
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  Text(
-                                    "Pickup",
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  Text(
-                                    "Weight(kg): 100",
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  Text(
-                                    "Date: 05/21/2024",
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  Text(
-                                    "Time: 4:00pm",
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                ],
-                              ),
-                            );
-                          });
-                    },
-                  );
+                    print(dono.org);
+                  if(dono.org.toString() == widget.email){
+                    return ListTile(
+                      title: Text(dono.donor),
+                      subtitle: Text(dono.status),
+                      trailing: IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.more_horiz),
+                      ),
+                      onTap: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (_) {
+                              return Container(
+                                height: 500,
+                                width: MediaQuery.of(context).size.width,
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Donation Type: Food",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    Text(
+                                      "Pickup",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    Text(
+                                      "Weight(kg): 100",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    Text(
+                                      "Date: 05/21/2024",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    Text(
+                                      "Time: 4:00pm",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            });
+                      },
+                    );
+                  }
                 })
             );
           },
