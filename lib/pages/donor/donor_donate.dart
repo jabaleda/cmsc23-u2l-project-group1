@@ -39,13 +39,14 @@ class DonorDonate extends StatefulWidget {
 
 class _DonorDonateState extends State<DonorDonate> {
 
-  static final List<String> _categories = ["Food", "Clothes", "Necessities", "Others"];
+  static final List<String> _categories = ["Food", "Clothes", "Cash", "Necessities", "Others"];
   static final List<String> _modes = ["Pick up", "Drop off"];
   
   final _formKey = GlobalKey<FormState>();
   // fields
   String category = "Food";
   bool othersSelected = false; 
+  bool cashSelected = false;
   String weight = "";
   String unit = "kg";
   String dateSelected = "";
@@ -90,31 +91,51 @@ class _DonorDonateState extends State<DonorDonate> {
                 donateToOrg(widget.org.name),    // pass selected org name to this page
                 
                 const Divider(),
-                const Align(
-                  alignment: Alignment.topLeft,
-                  child: Text("Donation Information"),
-                ),
+
+                donationInfoHeading(),
+                
 
                 // * Choose Item Category ----------
-                DropdownButtonFormField(
-                  value: category,
-                  onChanged: (val) {
-                    setState(() {
-                      if(val! == "Others"){
-                        othersSelected = true;
-                      } else {
-                        othersSelected  = false;
-                        category = val;
-                      }
-                    });
-                  },
-                  items: _categories.map((String category) {
-                    return DropdownMenuItem<String>(
-                      value: category,
-                      child: Text(category)
-                    );
-                  }).toList(),
+                Container(
+                  margin: EdgeInsets.only(top: 10, bottom: 10),
+                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 239, 239, 239),
+                    borderRadius: BorderRadius.circular(10),
+                    
+                  ),
+                  child: DropdownButtonFormField(
+                    icon: Icon(Icons.arrow_drop_down),
+                    iconSize: 35,
+                    decoration: InputDecoration(
+                      label: Text("Item Category"),
+                      enabledBorder: InputBorder.none,
+                    ),
+                    value: category,
+                    onChanged: (val) {
+                      setState(() {
+                        if(val! == "Others"){
+                          othersSelected = true;
+                          
+                        } else if (val == "Cash") {
+                          othersSelected = false;
+                          cashSelected = true;
+                        } else {
+                          othersSelected  = false;
+                          cashSelected = false;
+                          category = val;
+                        }
+                      });
+                    },
+                    items: _categories.map((String category) {
+                      return DropdownMenuItem<String>(
+                        value: category,
+                        child: Text(category)
+                      );
+                    }).toList(),
+                  ),
                 ),
+                
 
                 // * Text field for input of other category
                 Offstage(
@@ -123,40 +144,61 @@ class _DonorDonateState extends State<DonorDonate> {
                 ),
                 
                 // * Input weight and its unit ----------
-                Row(
-                  children: [
-                    Weight( (String val) => weight = val),
-                    Unit( (String val) => unit = val),
-                  ],
+                // Hide when cash is selected
+                Offstage(
+                  offstage: cashSelected,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Weight( (String val) => weight = val),
+                      Spacer(),
+                      Unit( (String val) => unit = val),
+                    ],
+                  ),
                 ),
                 
                 const Divider(),
-                const Align(
-                  alignment: Alignment.topLeft,
-                  child: Text("Logistics Information"),
-                ),
+
+                logisticsInfoHeading(),
+                
 
                 // * Pick a Date and Time ----------
-                TextFormField(
-                  controller: _datecontroller,
-                  decoration: InputDecoration(
-                    labelText: 'DATE',
-                    filled: true,
-                    prefixIcon: Icon(Icons.calendar_today),
-
+                Container(
+                  margin: EdgeInsets.only(top: 10, bottom: 10),
+                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 239, 239, 239),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  readOnly: true,
-                  validator: (val) {
-                    if(val==null || val.isEmpty) return "Invalid date";
-                    return null;
-                  },
-                  onTap: () {
-                    _selectDate();
-                  },
-                ),
+                  child: TextFormField(
+                    controller: _datecontroller,
+                    decoration: InputDecoration(
+                      labelText: 'Date',
+                      filled: false,
+                      prefixIcon: Icon(Icons.calendar_today),
+                      enabledBorder: InputBorder.none
+                    ),
+                    readOnly: true,
+                    validator: (val) {
+                      if(val==null || val.isEmpty) return "Invalid date";
+                      return null;
+                    },
+                    onTap: () {
+                      _selectDate();
+                    },
+                  ),
+                ), 
 
                 // * Pick mode  ----------
-                DropdownButtonFormField(
+                Container(
+                  margin: EdgeInsets.only(top: 10, bottom: 10),
+                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 239, 239, 239),
+                    borderRadius: BorderRadius.circular(10),
+                    
+                  ),
+                  child: DropdownButtonFormField(
                   value: mode,
                   onChanged: (val) {
                     setState(() {
@@ -179,7 +221,15 @@ class _DonorDonateState extends State<DonorDonate> {
                       child: Text(mode)
                     );
                   }).toList(),
+                  icon: Icon(Icons.arrow_drop_down),
+                  iconSize: 35,
+                  decoration: InputDecoration(
+                    label: Text("Mode of Delivery"),
+                    enabledBorder: InputBorder.none,
+                  ),
                 ),
+                )
+                ,
 
                 // * For Pick up: Address and Contact No ----------
                 Offstage(
@@ -195,7 +245,10 @@ class _DonorDonateState extends State<DonorDonate> {
                 // * For Drop off: QR Generation ----------
                 Offstage(
                   offstage: isPickUp,
-                  child: ElevatedButton(
+                  child: Container(
+                    margin: EdgeInsets.only(top: 10, bottom: 10),
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    child: ElevatedButton(
                     onPressed: () {
                       // * Unique Identifier for QR
                       String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
@@ -205,7 +258,8 @@ class _DonorDonateState extends State<DonorDonate> {
                       });
                     },
                     child: Text("Generate QR Code"),
-                  )
+                  ),
+                  ) 
                 ),
 
                 // * QR Image
@@ -218,40 +272,45 @@ class _DonorDonateState extends State<DonorDonate> {
 
 
                 // * Testing
-                ElevatedButton(
-                  onPressed: () {
-                    print(_formKey.currentState!.validate());
-                    if(_formKey.currentState!.validate()){
-                      print(category);
-                      print(weight);
-                      print(unit);
-                      print(dateSelected);
-                      print(mode);
+                Container(
+                  margin: EdgeInsets.only(top: 10, bottom: 10),
+                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      print(_formKey.currentState!.validate());
+                      if(_formKey.currentState!.validate()){
+                        print(category);
+                        print(weight);
+                        print(unit);
+                        print(dateSelected);
+                        print(mode);
 
-                      // Donation Object
-                      Donation newDonation = Donation(
-                        org: widget.org.email!,
-                        orgname: widget.org.name,
-                        donor: widget.donorEmail,
-                        category: category,
-                        pickUp: isPickUp,
-                        weight: weight,
-                        unit: unit,
-                        date: dateSelected,
-                        contactNo: contact,
-                        status: "Pending",
-                        address: address,
-                        // TODO: qr code  
-                        // TODO: firebase storage url of photo 
-                      );
+                        // Donation Object
+                        Donation newDonation = Donation(
+                          org: widget.org.email!,
+                          orgname: widget.org.name,
+                          donor: widget.donorEmail,
+                          category: category,
+                          pickUp: isPickUp,
+                          weight: weight,
+                          unit: unit,
+                          date: dateSelected,
+                          contactNo: contact,
+                          status: "Pending",
+                          address: address,
+                          // TODO: qr code  
+                          // TODO: firebase storage url of photo 
+                        );
 
-                      // store to db
-                      context.read<DonorDonationProvider>().addDonation(newDonation);
+                        // store to db
+                        context.read<DonorDonationProvider>().addDonation(newDonation);
 
-                    }
-                  }, 
-                  child: Text("Display input")
+                      }
+                    }, 
+                    child: Text("Send Donation")
+                  ),
                 )
+                
 
 
               ],
@@ -265,8 +324,33 @@ class _DonorDonateState extends State<DonorDonate> {
 
   Widget donateToOrg(String orgname) => Align(
     alignment: Alignment.topLeft,
-    child: Text("Donating to: $orgname"),
-  );   
+    child: Container(
+      margin:  EdgeInsets.only(top: 10, bottom: 5),
+      child: Text(
+        "Donating to: $orgname",
+        style: TextStyle(
+          fontSize: 18,
+          
+        ),
+      ),
+    )
+  ); 
+
+  Widget donationInfoHeading() => Align(
+    alignment: Alignment.topLeft,
+    child: Container(
+      margin:  EdgeInsets.only(top: 5, bottom: 5),
+      child: Text("Donation Information"),
+    )
+  ); 
+
+  Widget logisticsInfoHeading() => Align(
+    alignment: Alignment.topLeft,
+    child: Container(
+      margin:  EdgeInsets.only(top: 5, bottom: 5),
+      child: Text("Logistics Information"),
+    )
+  ); 
 
   Future<void> _selectDate() async {
     DateTime? picked = await showDatePicker(
