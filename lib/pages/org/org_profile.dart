@@ -82,9 +82,10 @@ class _OrganizationProfileState extends State<OrganizationProfile> {
                   Divider(
                   ),
                   SwitchListTile(
-                    title: Text("Status for donation"),
+                    title: Text("Status for Donation"),
                     value: org.statusDonation,
                     onChanged: (bool val) async {
+                      context.read<OrgProvider>().toggleDonation(snapshot.data!.docs[0].id, val);
                     },
                   ),
                 ],

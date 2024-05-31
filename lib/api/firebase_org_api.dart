@@ -73,4 +73,14 @@ class FirebaseOrgAPI {
     }
   }
 
+  Future<String> toggleDonation(String id, bool status) async {
+    try {
+      await db.collection("organizations").doc(id).update({"statusDonation": status});
+
+      return "Successfully toggled!";
+    } on FirebaseException catch (e) {
+      return "Error in ${e.code}: ${e.message}";
+    }
+  }
+
 }
